@@ -9,6 +9,7 @@ import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.AnchorPane;
+import javafx.scene.layout.GridPane;
 
 import java.io.IOException;
 import java.util.List;
@@ -23,8 +24,14 @@ public class Controller {
     @FXML
     public Button addNewEmployee;
 
+    @FXML
     public AnchorPane rightBodyAnchor;
+
+    @FXML
     public AnchorPane summaryChildBody;
+
+    @FXML
+    public GridPane rootlayout;
 
     @FXML
     private ChoiceBox<String> projectChoiceBox;

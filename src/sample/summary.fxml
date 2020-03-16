@@ -10,7 +10,8 @@
 
 <AnchorPane prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/10.0.2-internal" xmlns:fx="http://javafx.com/fxml/1" fx:controller="sample.SummaryController">
    <children>
-      <TilePane alignment="TOP_CENTER" hgap="16.0" prefHeight="200.0" prefWidth="200.0" vgap="16.0" AnchorPane.bottomAnchor="16.0" AnchorPane.leftAnchor="16.0" AnchorPane.rightAnchor="16.0" AnchorPane.topAnchor="16.0">
+      <Label fx:id="connectionStatus" text="Connection not available" />
+      <TilePane fx:id="summaryTilePane" alignment="TOP_CENTER" hgap="16.0" prefHeight="200.0" prefWidth="200.0" vgap="16.0" AnchorPane.bottomAnchor="16.0" AnchorPane.leftAnchor="16.0" AnchorPane.rightAnchor="16.0" AnchorPane.topAnchor="16.0">
          <children>
             <StackPane prefHeight="150.0" prefWidth="200.0">
                <children>
@@ -64,7 +65,7 @@
                   <Insets bottom="16.0" left="16.0" right="16.0" top="16.0" />
                </TilePane.margin>
             </StackPane>
-            <StackPane layoutX="10.0" layoutY="10.0" prefHeight="150.0" prefWidth="200.0">
+            <StackPane layoutX="194.0" layoutY="26.0" prefHeight="150.0" prefWidth="200.0">
                <children>
                   <Rectangle arcHeight="5.0" arcWidth="5.0" height="200.0" stroke="BLACK" strokeType="INSIDE" width="200.0">
                      <fill>
@@ -93,14 +94,25 @@
                         <RowConstraints />
                      </rowConstraints>
                      <children>
-                        <Label text="asdfads">
+                        <Label fx:id="departmentSummaryfield" text="asdfads" GridPane.halignment="CENTER" GridPane.rowIndex="0" GridPane.valignment="CENTER">
                            <font>
-                              <Font name="Bradley Hand Bold" size="24.0" />
+                              <Font name="Bradley Hand Bold" size="37.0" />
                            </font>
+                           <effect>
+                              <Glow />
+                           </effect>
                         </Label>
-                        <Label text="Label" GridPane.rowIndex="1">
+                        <Label  text="employees in Project" GridPane.halignment="CENTER" GridPane.rowIndex="1" GridPane.valignment="CENTER">
                            <font>
-                              <Font name="Bradley Hand Bold" size="26.0" />
+                              <Font name="Bradley Hand Bold" size="15.0" />
+                           </font>
+                           <effect>
+                              <Glow />
+                           </effect>
+                        </Label>
+                        <Label fx:id="departmentSummaryLabel" text="Label" GridPane.halignment="CENTER"  GridPane.rowIndex="2" GridPane.valignment="CENTER">
+                           <font>
+                              <Font name="Bradley Hand Bold" size="19.0" />
                            </font>
                         </Label>
                      </children>
@@ -112,11 +124,8 @@
                      </padding>
                   </GridPane>
                </children>
-               <TilePane.margin>
-                  <Insets bottom="16.0" left="16.0" right="16.0" top="16.0" />
-               </TilePane.margin>
             </StackPane>
-            <StackPane layoutX="10.0" layoutY="10.0" prefHeight="150.0" prefWidth="200.0">
+            <StackPane layoutX="70.0" layoutY="26.0" prefHeight="150.0" prefWidth="200.0">
                <children>
                   <Rectangle arcHeight="5.0" arcWidth="5.0" height="200.0" stroke="BLACK" strokeType="INSIDE" width="200.0">
                      <fill>
@@ -145,14 +154,25 @@
                         <RowConstraints />
                      </rowConstraints>
                      <children>
-                        <Label text="asdfads">
+                        <Label fx:id="projectSummaryfield" text="asdfads" GridPane.halignment="CENTER" GridPane.valignment="CENTER" GridPane.rowIndex="0">
                            <font>
-                              <Font name="Bradley Hand Bold" size="24.0" />
+                              <Font name="Bradley Hand Bold" size="37.0" />
                            </font>
+                           <effect>
+                              <Glow />
+                           </effect>
                         </Label>
-                        <Label text="Label" GridPane.rowIndex="1">
+                        <Label text="Hours spent in" GridPane.halignment="CENTER" GridPane.valignment="CENTER" GridPane.rowIndex="1">
                            <font>
-                              <Font name="Bradley Hand Bold" size="26.0" />
+                              <Font name="Bradley Hand Bold" size="15.0" />
+                           </font>
+                           <effect>
+                              <Glow />
+                           </effect>
+                        </Label>
+                        <Label fx:id="projectSummaryLabel" text="Label" GridPane.halignment="CENTER" GridPane.rowIndex="2" GridPane.valignment="CENTER">
+                           <font>
+                              <Font name="Bradley Hand Bold" size="19.0" />
                            </font>
                         </Label>
                      </children>
@@ -164,9 +184,6 @@
                      </padding>
                   </GridPane>
                </children>
-               <TilePane.margin>
-                  <Insets bottom="16.0" left="16.0" right="16.0" top="16.0" />
-               </TilePane.margin>
             </StackPane>
          </children>
          <effect>

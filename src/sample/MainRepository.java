@@ -143,4 +143,30 @@ public class MainRepository {
         return null;
     }
 
+    public List<ProjectSummaryModel> getProjectSummary(){
+        List<ProjectSummaryModel> projectSummaryModels = new ArrayList<>();
+        String query = "select Pname, Pno, Count(Pno), sum(hours)\n" +
+                "from Works_on, Project\n" +
+                "where Pnumber = Pno\n" +
+                "group by Pno, Pname";
+
+        try {
+            PreparedStatement p = conn.prepareStatement(query);
+            p.clearParameters();
+            ResultSet r = p.executeQuery();
+            while (r.next()) {
+                projectSummaryModels.add(new ProjectSummaryModel(r.getString(1),
+                        r.getString(2),
+                        r.getString(3),
+                        r.getString(4)));
+            }
+        } catch (SQLException e) {
+            LOGGER.log(Level.WARNING, e.toString());
+        }catch (NullPointerException n){
+            LOGGER.log(Level.WARNING, "Database connection not initiated.");
+        }
+        return projectSummaryModels;
+
+    }
+
 }
