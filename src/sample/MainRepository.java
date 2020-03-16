@@ -21,14 +21,13 @@ public class MainRepository {
         }
         return instance;
     }
-
     public void initiateConnection() throws SQLException {
         try {
             Class.forName("oracle.jdbc.driver.OracleDriver");
         } catch (ClassNotFoundException x) {
             System.out.println("Driver could not be loaded");
         }
-        
+
         // TODO create connection here...
         String stmt1 = "select Lname, Salary from EMPLOYEE";
         PreparedStatement p = conn.prepareStatement(stmt1);
