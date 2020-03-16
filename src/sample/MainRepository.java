@@ -6,6 +6,7 @@ import java.util.List;
 import java.util.logging.Level;
 
 import static com.sun.xml.internal.ws.spi.db.BindingContextFactory.LOGGER;
+import static sample.EmployeeSummaryState.*;
 
 public class MainRepository {
 
@@ -113,6 +114,33 @@ public class MainRepository {
             LOGGER.log(Level.WARNING, "Database connection not initiated.");
         }
         return employees;
+    }
+
+    public String getSummary(int employeeSummaryState){
+        String query="";
+        if(employeeSummaryState== TOTAL_EMPLOYEE.getAction()){
+            query = "select count(fname) from Employee";
+        }else if(employeeSummaryState== HIGH_SALARY.getAction()){
+            query = "select max(salary) from Employee";
+        }
+        else if(employeeSummaryState== LOW_SALARY.getAction()){
+            query = "select min(salary) from Employee";
+        }else{
+            return null;
+        }
+        try {
+            PreparedStatement p = conn.prepareStatement(query);
+            p.clearParameters();
+            ResultSet r = p.executeQuery();
+            while (r.next()) {
+                return r.getString(1);
+            }
+        } catch (SQLException e) {
+            LOGGER.log(Level.WARNING, e.toString());
+        }catch (NullPointerException n){
+            LOGGER.log(Level.WARNING, "Database connection not initiated.");
+        }
+        return null;
     }
 
 }
