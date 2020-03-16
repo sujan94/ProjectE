@@ -16,6 +16,9 @@ public class Controller {
     public TableView employeeTable;
 
     @FXML
+    public Button addNewEmployee;
+
+    @FXML
     private ChoiceBox<String> projectChoiceBox;
 
     @FXML
@@ -50,57 +53,59 @@ public class Controller {
 
     private void initializeEmployeeTable() {
         TableColumn firstNameCol = new TableColumn("First Name");
-        firstNameCol.setMinWidth(100);
+        firstNameCol.setMinWidth(60);
         firstNameCol.setCellValueFactory(
                 new PropertyValueFactory<Employee, String>("fname"));
 
         TableColumn mNameCol = new TableColumn("First Name");
-        mNameCol.setMinWidth(100);
+        mNameCol.setMinWidth(60);
         mNameCol.setCellValueFactory(
                 new PropertyValueFactory<Employee, String>("minit"));
 
         TableColumn lastNameCol = new TableColumn("First Name");
-        lastNameCol.setMinWidth(100);
+        lastNameCol.setMinWidth(60);
         lastNameCol.setCellValueFactory(
                 new PropertyValueFactory<Employee, String>("lname"));
 
         TableColumn ssnCol = new TableColumn("First Name");
-        ssnCol.setMinWidth(100);
+        ssnCol.setMinWidth(60);
         ssnCol.setCellValueFactory(
                 new PropertyValueFactory<Employee, String>("ssn"));
 
         TableColumn bdateCol = new TableColumn("First Name");
-        bdateCol.setMinWidth(100);
+        bdateCol.setMinWidth(60);
         bdateCol.setCellValueFactory(
                 new PropertyValueFactory<Employee, String>("bdate"));
 
         TableColumn addressCol = new TableColumn("First Name");
-        addressCol.setMinWidth(100);
+        addressCol.setMinWidth(60);
         addressCol.setCellValueFactory(
                 new PropertyValueFactory<Employee, String>("address"));
 
         TableColumn sexCol = new TableColumn("First Name");
-        sexCol.setMinWidth(100);
+        sexCol.setMinWidth(60);
         sexCol.setCellValueFactory(
                 new PropertyValueFactory<Employee, String>("sex"));
 
         TableColumn salaryCol = new TableColumn("First Name");
-        salaryCol.setMinWidth(100);
+        salaryCol.setMinWidth(60);
         salaryCol.setCellValueFactory(
                 new PropertyValueFactory<Employee, String>("salary"));
 
         TableColumn superssnCol = new TableColumn("First Name");
-        superssnCol.setMinWidth(100);
+        superssnCol.setMinWidth(60);
         superssnCol.setCellValueFactory(
                 new PropertyValueFactory<Employee, String>("superssn"));
 
         TableColumn dnoCol = new TableColumn("First Name");
-        dnoCol.setMinWidth(100);
+        dnoCol.setMinWidth(60);
         dnoCol.setCellValueFactory(
                 new PropertyValueFactory<Employee, String>("dno"));
 
         employeeTable.setItems(employeeObservableList);
         employeeTable.getColumns().addAll(firstNameCol,mNameCol ,lastNameCol, ssnCol, bdateCol, addressCol, sexCol, salaryCol, superssnCol, dnoCol);
+        // Load the default employee table without filter
+        onSearchButtonClicked();
     }
 
     private void initalizeLocationChoiceBox() {

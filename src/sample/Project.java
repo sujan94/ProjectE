@@ -13,7 +13,7 @@ public class Project {
         this.dnumber = dnumber;
     }
 
-    public String getPname(
+    public String getPname() {
         return pname;
     }
 

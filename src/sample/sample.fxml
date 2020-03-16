@@ -3,10 +3,11 @@
 <?import javafx.geometry.*?>
 <?import javafx.scene.*?>
 <?import javafx.scene.control.*?>
+<?import javafx.scene.effect.*?>
 <?import javafx.scene.layout.*?>
 <?import javafx.scene.text.*?>
 
-<GridPane hgap="10" minHeight="200.0" minWidth="200.0" prefHeight="372.0" prefWidth="675.0" vgap="10" xmlns="http://javafx.com/javafx/10.0.2-internal" xmlns:fx="http://javafx.com/fxml/1" fx:controller="sample.Controller">
+<GridPane hgap="10" minHeight="200.0" minWidth="200.0" prefHeight="543.0" prefWidth="661.0" vgap="10" xmlns="http://javafx.com/javafx/10.0.2-internal" xmlns:fx="http://javafx.com/fxml/1" fx:controller="sample.Controller">
    <columnConstraints>
       <ColumnConstraints />
    </columnConstraints>
@@ -18,9 +19,9 @@
       <Insets bottom="16.0" left="16.0" right="16.0" top="16.0" />
    </padding>
    <children>
-      <SplitPane dividerPositions="0.29797979797979796" prefHeight="160.0" prefWidth="200.0" GridPane.hgrow="ALWAYS" GridPane.rowIndex="1" GridPane.vgrow="ALWAYS">
+      <SplitPane dividerPositions="0.29797979797979796" prefHeight="160.0" prefWidth="200.0" GridPane.hgrow="SOMETIMES" GridPane.rowIndex="1" GridPane.vgrow="ALWAYS">
         <items>
-          <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="158.0" prefWidth="95.0">
+          <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="158.0" prefWidth="70.0" SplitPane.resizableWithParent="false">
                <children>
                   <ListView fx:id="list" focusTraversable="false" AnchorPane.bottomAnchor="8.0" AnchorPane.leftAnchor="8.0" AnchorPane.rightAnchor="8.0" AnchorPane.topAnchor="0.0">
                      <padding>
@@ -33,9 +34,7 @@
                </children></AnchorPane>
           <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="235.0" prefWidth="297.0">
                <children>
-                  <FlowPane layoutX="16.0" layoutY="11.0" orientation="VERTICAL" AnchorPane.leftAnchor="8.0">
-                     <children>
-                        <GridPane hgap="8.0" vgap="8.0">
+                        <GridPane hgap="8.0" vgap="8.0" AnchorPane.leftAnchor="8.0" AnchorPane.topAnchor="8.0">
                            <columnConstraints>
                               <ColumnConstraints halignment="left" hgrow="SOMETIMES" minWidth="10.0" />
                               <ColumnConstraints halignment="left" hgrow="SOMETIMES" minWidth="10.0" />
@@ -56,15 +55,36 @@
                               <Button fx:id="searchButton" mnemonicParsing="false" onAction="#onSearchButtonClicked" text="Search" GridPane.columnIndex="1" GridPane.rowIndex="3" />
                            </children>
                         </GridPane>
-                        <Label text="Table">
+
+                  <FlowPane prefWrapLength="1.0" rowValignment="BASELINE" AnchorPane.leftAnchor="8.0" AnchorPane.topAnchor="150.0">
+                     <children>
+
+                              <Label text="Table">
+                                 <padding>
+                                    <Insets top="16.0" />
+                                 </padding>
+                              </Label>
+                         <TableView fx:id="employeeTable" prefHeight="230.0">
+                             <columns>
+                             </columns>
                            <padding>
-                              <Insets top="16.0" />
+                              <Insets bottom="8.0" left="8.0" right="8.0" top="8.0" />
                            </padding>
-                        </Label>
-                        <TableView fx:id="employeeTable" prefHeight="200.0">
-                          <columns>
-                          </columns>
-                        </TableView>
+                           <effect>
+                              <DropShadow />
+                           </effect>
+                           <FlowPane.margin>
+                              <Insets top="16.0" />
+                           </FlowPane.margin>
+                         </TableView>
+                        <Button fx:id="addNewEmployee" mnemonicParsing="false" text="Add new employee">
+                           <padding>
+                              <Insets bottom="8.0" left="8.0" right="8.0" top="8.0" />
+                           </padding>
+                           <FlowPane.margin>
+                              <Insets bottom="8.0" top="8.0" />
+                           </FlowPane.margin>
+                        </Button>
                      </children>
                   </FlowPane>
                </children></AnchorPane>

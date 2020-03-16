@@ -22,7 +22,7 @@ public class Main extends Application {
         Controller controller = fxmlLoader.getController();
         Parent root = fxmlLoader.load();
         primaryStage.setTitle("Hello World");
-        primaryStage.setScene(new Scene(root, 300, 275));
+        primaryStage.setScene(new Scene(root, 900, 575));
         primaryStage.show();
 
 

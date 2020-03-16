@@ -28,7 +28,7 @@ public class MainRepository {
         } catch (ClassNotFoundException x) {
             System.out.println("Driver could not be loaded");
         }
-
+        
         // TODO create connection here...
         String stmt1 = "select Lname, Salary from EMPLOYEE";
         PreparedStatement p = conn.prepareStatement(stmt1);
