@@ -1,15 +1,17 @@
-package sample;
+package sample.controller;
 
 import javafx.application.Platform;
 import javafx.fxml.FXML;
 import javafx.scene.control.Label;
 import javafx.scene.layout.TilePane;
+import sample.repository.MainRepository;
+import sample.model.ProjectSummaryModel;
 
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-public class SummaryController {
+public class SummaryController  {
 
     @FXML
     public Label employeeSummaryfield;
@@ -30,6 +32,9 @@ public class SummaryController {
     public Label projectSummaryfield;
     @FXML
     public Label projectSummaryLabel;
+
+    private Thread employeeThread;
+    private Thread projectThread;
 
     public void setConnectionAvailable(boolean connectionAvailable) {
         connectionStatus.setVisible(!connectionAvailable);
@@ -52,6 +57,7 @@ public class SummaryController {
                 while (true) {
                     int finalCount = count;
                     setConnectionAvailable(projectSummaryModelList != null && !projectSummaryModelList.isEmpty());
+                    System.out.println(Thread.currentThread().getId());
                     Platform.runLater(new Runnable() {
                         @Override
                         public void run() {
@@ -73,8 +79,8 @@ public class SummaryController {
             }
         };
 
-        Thread thread = new Thread(runnable);
-        thread.start();
+        projectThread = new Thread(runnable);
+        projectThread.start();
 
     }
 
@@ -90,11 +96,13 @@ public class SummaryController {
                     int finalCount = count;
                     String value = MainRepository.getInstance().getSummary(finalCount % employeeSummary.size());
                     setConnectionAvailable(value != null);
+                    System.out.println(Thread.currentThread().getId());
                     Platform.runLater(new Runnable() {
                         @Override
                         public void run() {
                             employeeSummaryfield.setText(value);
                             employeeSummaryLabel.setText(getState(finalCount % employeeSummary.size()));
+
                         }
                     });
                     count++;
@@ -106,9 +114,8 @@ public class SummaryController {
                 }
             }
         };
-
-        Thread thread = new Thread(runnable);
-        thread.start();
+         employeeThread = new Thread(runnable);
+        employeeThread.start();
     }
 
     public String getState(int action) {

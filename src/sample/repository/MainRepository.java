@@ -1,4 +1,7 @@
-package sample;
+package sample.repository;
+
+import sample.model.Employee;
+import sample.model.ProjectSummaryModel;
 
 import java.sql.*;
 import java.util.ArrayList;
@@ -6,7 +9,7 @@ import java.util.List;
 import java.util.logging.Level;
 
 import static com.sun.xml.internal.ws.spi.db.BindingContextFactory.LOGGER;
-import static sample.EmployeeSummaryState.*;
+import static sample.enums.EmployeeSummaryState.*;
 
 public class MainRepository {
 
@@ -166,7 +169,6 @@ public class MainRepository {
             LOGGER.log(Level.WARNING, "Database connection not initiated.");
         }
         return projectSummaryModels;
-
     }
 
 }

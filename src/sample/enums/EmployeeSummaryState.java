@@ -1,4 +1,4 @@
-package sample;
+package sample.enums;
 
 import com.sun.tools.javac.comp.Lower;
 
@@ -17,7 +17,7 @@ public enum EmployeeSummaryState {
 
 
     // enum constructor - cannot be public or protected
-    private EmployeeSummaryState(int action) {
+    EmployeeSummaryState(int action) {
         this.action = action;
     }
 }

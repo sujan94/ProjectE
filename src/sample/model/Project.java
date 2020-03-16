@@ -1,4 +1,4 @@
-package sample;
+package sample.model;
 
 public class Project {
     private String pname;

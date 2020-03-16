@@ -1,4 +1,4 @@
-package sample;
+package sample.model;
 
 public class Department {
     private String dname;

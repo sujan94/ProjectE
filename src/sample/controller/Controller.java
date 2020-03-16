@@ -1,4 +1,4 @@
-package sample;
+package sample.controller;
 
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
@@ -10,6 +10,8 @@ import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.GridPane;
+import sample.repository.MainRepository;
+import sample.model.Employee;
 
 import java.io.IOException;
 import java.util.List;
@@ -219,7 +221,7 @@ public class Controller {
                 rightBodyAnchor.getChildren().remove(department);
                 rightBodyAnchor.getChildren().remove(summary);
                 try {
-                    summary = FXMLLoader.load(getClass().getResource("summary.fxml"));
+                    summary = FXMLLoader.load(getClass().getResource("../ui/summary.fxml"));
                 } catch (IOException e) {
                     e.printStackTrace();
                 }
@@ -238,7 +240,7 @@ public class Controller {
                     rightBodyAnchor.getChildren().remove(project);
                     rightBodyAnchor.getChildren().remove(department);
                     rightBodyAnchor.getChildren().remove(summary);
-                    department = FXMLLoader.load(getClass().getResource("department.fxml"));
+                    department = FXMLLoader.load(getClass().getResource("../ui/department.fxml"));
                     summaryChildBody.setVisible(false);
                     rightBodyAnchor.getChildren().add(department);
                 } catch (IOException e) {
@@ -250,7 +252,7 @@ public class Controller {
                     rightBodyAnchor.getChildren().remove(department);
                     rightBodyAnchor.getChildren().remove(project);
                     rightBodyAnchor.getChildren().remove(summary);
-                    project = FXMLLoader.load(getClass().getResource("project.fxml"));
+                    project = FXMLLoader.load(getClass().getResource("../ui/project.fxml"));
                     summaryChildBody.setVisible(false);
                     rightBodyAnchor.getChildren().add(project);
                 } catch (IOException e) {
