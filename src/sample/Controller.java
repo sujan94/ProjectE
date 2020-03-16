@@ -3,9 +3,14 @@ package sample;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
+import javafx.fxml.FXMLLoader;
+import javafx.scene.Parent;
 import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
+import javafx.scene.input.MouseEvent;
+import javafx.scene.layout.AnchorPane;
 
+import java.io.IOException;
 import java.util.List;
 
 public class Controller {
@@ -17,6 +22,9 @@ public class Controller {
 
     @FXML
     public Button addNewEmployee;
+
+    public AnchorPane rightBodyAnchor;
+    public AnchorPane summaryChildBody;
 
     @FXML
     private ChoiceBox<String> projectChoiceBox;
@@ -42,13 +50,17 @@ public class Controller {
     private ObservableList<String> locationList = FXCollections.observableArrayList();
     private ObservableList<Employee> employeeObservableList = FXCollections.observableArrayList();
 
+    //TODO fix this.
+    private Parent department;
+    private Parent project;
+    private Parent summary;
+
     public void initialize() {
         initializeLeftNav();
         initializeDeptChoiceBox();
         initializeProjectChoiceBox();
         initalizeLocationChoiceBox();
         initializeEmployeeTable();
-
     }
 
     private void initializeEmployeeTable() {
@@ -103,7 +115,7 @@ public class Controller {
                 new PropertyValueFactory<Employee, String>("dno"));
 
         employeeTable.setItems(employeeObservableList);
-        employeeTable.getColumns().addAll(firstNameCol,mNameCol ,lastNameCol, ssnCol, bdateCol, addressCol, sexCol, salaryCol, superssnCol, dnoCol);
+        employeeTable.getColumns().addAll(firstNameCol, mNameCol, lastNameCol, ssnCol, bdateCol, addressCol, sexCol, salaryCol, superssnCol, dnoCol);
         // Load the default employee table without filter
         onSearchButtonClicked();
     }
@@ -130,6 +142,7 @@ public class Controller {
     }
 
     private void initializeLeftNav() {
+        listItem.add("Summary");
         listItem.add("Employee");
         listItem.add("Department");
         listItem.add("Project");
@@ -149,48 +162,96 @@ public class Controller {
         String projectValue = projectChoiceBox.getValue();
         String locationValue = locationChoiceBox.getValue();
         // if all choice values are any
-        if(departmentValue.equals(DEFAULT_CHOICE_BOX_STATE) && projectValue.equals(DEFAULT_CHOICE_BOX_STATE) && locationValue.equals(DEFAULT_CHOICE_BOX_STATE)){
+        if (departmentValue.equals(DEFAULT_CHOICE_BOX_STATE) && projectValue.equals(DEFAULT_CHOICE_BOX_STATE) && locationValue.equals(DEFAULT_CHOICE_BOX_STATE)) {
             stringBuilder.append("from EMPLOYEE");
         }
         // if all choice values are not any
-        else if(!departmentValue.equals(DEFAULT_CHOICE_BOX_STATE) && !projectValue.equals(DEFAULT_CHOICE_BOX_STATE) && !locationValue.equals(DEFAULT_CHOICE_BOX_STATE)){
+        else if (!departmentValue.equals(DEFAULT_CHOICE_BOX_STATE) && !projectValue.equals(DEFAULT_CHOICE_BOX_STATE) && !locationValue.equals(DEFAULT_CHOICE_BOX_STATE)) {
             stringBuilder.append("from EMPLOYEE, DEPARTMENT, DEPT_LOCATIONS, PROJECT ");
             stringBuilder.append("where Dno = Dnumber and Dnumber = Dnum and Dname ='").append(departmentValue).append("' and Pname='").append(projectValue).append("' and Dlocation='").append(locationValue).append("'");
         }
         //if department and project is  any
-        else if(departmentValue.equals(DEFAULT_CHOICE_BOX_STATE) && projectValue.equals(DEFAULT_CHOICE_BOX_STATE) && !locationValue.equals(DEFAULT_CHOICE_BOX_STATE)
-        ){
+        else if (departmentValue.equals(DEFAULT_CHOICE_BOX_STATE) && projectValue.equals(DEFAULT_CHOICE_BOX_STATE) && !locationValue.equals(DEFAULT_CHOICE_BOX_STATE)
+        ) {
             stringBuilder.append("from EMPLOYEE, DEPT_LOCATIONS ");
             stringBuilder.append("where Dno = Dnumber and Dlocation='").append(locationValue).append("'");
         }
         //if department and location is any
-        else if(departmentValue.equals(DEFAULT_CHOICE_BOX_STATE) && !projectValue.equals(DEFAULT_CHOICE_BOX_STATE) && locationValue.equals(DEFAULT_CHOICE_BOX_STATE)){
+        else if (departmentValue.equals(DEFAULT_CHOICE_BOX_STATE) && !projectValue.equals(DEFAULT_CHOICE_BOX_STATE) && locationValue.equals(DEFAULT_CHOICE_BOX_STATE)) {
             stringBuilder.append("from EMPLOYEE,PROJECT ");
             stringBuilder.append("where Dno = Dnum and Pname='").append(projectValue).append("'");
         }
         // if only department is any
-        else if (departmentValue.equals(DEFAULT_CHOICE_BOX_STATE) && !projectValue.equals(DEFAULT_CHOICE_BOX_STATE) && !locationValue.equals(DEFAULT_CHOICE_BOX_STATE))
-        {
+        else if (departmentValue.equals(DEFAULT_CHOICE_BOX_STATE) && !projectValue.equals(DEFAULT_CHOICE_BOX_STATE) && !locationValue.equals(DEFAULT_CHOICE_BOX_STATE)) {
             stringBuilder.append("from EMPLOYEE, DEPT_LOCATIONS, PROJECT ");
             stringBuilder.append("where Dno = Dnumber and Dnumber = Dnum and Pname='").append(projectValue).append("' and Dlocation='").append(locationValue).append("'");
         }
         // if only project is any
-        else if (!departmentValue.equals(DEFAULT_CHOICE_BOX_STATE) && projectValue.equals(DEFAULT_CHOICE_BOX_STATE) && !locationValue.equals(DEFAULT_CHOICE_BOX_STATE)){
+        else if (!departmentValue.equals(DEFAULT_CHOICE_BOX_STATE) && projectValue.equals(DEFAULT_CHOICE_BOX_STATE) && !locationValue.equals(DEFAULT_CHOICE_BOX_STATE)) {
             stringBuilder.append("from EMPLOYEE, DEPARTMENT, DEPT_LOCATIONS ");
             stringBuilder.append("where Dno = Dnumber and Dname ='").append(departmentValue).append("' and Dlocation='").append(locationValue).append("'");
         }
         //if only location is any
-        else if (!departmentValue.equals(DEFAULT_CHOICE_BOX_STATE) && !projectValue.equals(DEFAULT_CHOICE_BOX_STATE) && locationValue.equals(DEFAULT_CHOICE_BOX_STATE)){
+        else if (!departmentValue.equals(DEFAULT_CHOICE_BOX_STATE) && !projectValue.equals(DEFAULT_CHOICE_BOX_STATE) && locationValue.equals(DEFAULT_CHOICE_BOX_STATE)) {
             stringBuilder.append("from EMPLOYEE, DEPARTMENT, PROJECT ");
             stringBuilder.append("where Dno = Dnumber and Dnumber = Dnum and Dname ='").append(departmentValue).append("' and Pname='").append(projectValue).append("'");
-        }else{
+        } else {
             stringBuilder.append("from EMPLOYEE, DEPARTMENT ");
             stringBuilder.append("where Dno = Dnumber and Dname ='").append(departmentValue).append("'");
         }
 
-       List<Employee> employeeList= MainRepository.getInstance().getAllEmployees(stringBuilder.toString());
+        List<Employee> employeeList = MainRepository.getInstance().getAllEmployees(stringBuilder.toString());
         employeeObservableList.addAll(employeeList);
+    }
 
+    public void onItemSelectedOnLeftNav(MouseEvent arg0) {
+        System.out.println("clicked on " + list.getSelectionModel().getSelectedItem());
+        switch (list.getSelectionModel().getSelectedIndex()) {
+            case 0:
+                rightBodyAnchor.getChildren().remove(project);
+                rightBodyAnchor.getChildren().remove(department);
+                rightBodyAnchor.getChildren().remove(summary);
+                try {
+                    summary = FXMLLoader.load(getClass().getResource("summary.fxml"));
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
+                summaryChildBody.setVisible(false);
+                rightBodyAnchor.getChildren().add(summary);
+                break;
+            case 1:
+                summaryChildBody.setVisible(true);
+                rightBodyAnchor.getChildren().remove(project);
+                rightBodyAnchor.getChildren().remove(department);
+                rightBodyAnchor.getChildren().remove(summary);
+
+                break;
+            case 2:
+                try {
+                    rightBodyAnchor.getChildren().remove(project);
+                    rightBodyAnchor.getChildren().remove(department);
+                    rightBodyAnchor.getChildren().remove(summary);
+                    department = FXMLLoader.load(getClass().getResource("department.fxml"));
+                    summaryChildBody.setVisible(false);
+                    rightBodyAnchor.getChildren().add(department);
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
+                break;
+            case 3:
+                try {
+                    rightBodyAnchor.getChildren().remove(department);
+                    rightBodyAnchor.getChildren().remove(project);
+                    rightBodyAnchor.getChildren().remove(summary);
+                    project = FXMLLoader.load(getClass().getResource("project.fxml"));
+                    summaryChildBody.setVisible(false);
+                    rightBodyAnchor.getChildren().add(project);
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
+                break;
+
+        }
 
     }
 }
