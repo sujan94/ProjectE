@@ -1,0 +1,82 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.*?>
+<?import javafx.scene.*?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+<?import javafx.scene.text.*?>
+
+<GridPane hgap="10" minHeight="200.0" minWidth="200.0" prefHeight="372.0" prefWidth="675.0" vgap="10" xmlns="http://javafx.com/javafx/10.0.2-internal" xmlns:fx="http://javafx.com/fxml/1" fx:controller="sample.Controller">
+   <columnConstraints>
+      <ColumnConstraints />
+   </columnConstraints>
+   <rowConstraints>
+      <RowConstraints />
+      <RowConstraints />
+   </rowConstraints>
+   <padding>
+      <Insets bottom="16.0" left="16.0" right="16.0" top="16.0" />
+   </padding>
+   <children>
+      <SplitPane dividerPositions="0.29797979797979796" prefHeight="160.0" prefWidth="200.0" GridPane.hgrow="ALWAYS" GridPane.rowIndex="1" GridPane.vgrow="ALWAYS">
+        <items>
+          <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="158.0" prefWidth="95.0">
+               <children>
+                  <ListView fx:id="list" focusTraversable="false" AnchorPane.bottomAnchor="8.0" AnchorPane.leftAnchor="8.0" AnchorPane.rightAnchor="8.0" AnchorPane.topAnchor="0.0">
+                     <padding>
+                        <Insets bottom="8.0" left="8.0" right="8.0" top="8.0" />
+                     </padding>
+                     <cursor>
+                        <Cursor fx:constant="DEFAULT" />
+                     </cursor>
+                  </ListView>
+               </children></AnchorPane>
+          <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="235.0" prefWidth="297.0">
+               <children>
+                  <FlowPane layoutX="16.0" layoutY="11.0" orientation="VERTICAL" AnchorPane.leftAnchor="8.0">
+                     <children>
+                        <GridPane hgap="8.0" vgap="8.0">
+                           <columnConstraints>
+                              <ColumnConstraints halignment="left" hgrow="SOMETIMES" minWidth="10.0" />
+                              <ColumnConstraints halignment="left" hgrow="SOMETIMES" minWidth="10.0" />
+                           </columnConstraints>
+                           <rowConstraints>
+                              <RowConstraints minHeight="10.0" vgrow="SOMETIMES" />
+                              <RowConstraints minHeight="10.0" vgrow="SOMETIMES" />
+                              <RowConstraints minHeight="10.0" vgrow="SOMETIMES" />
+                              <RowConstraints />
+                           </rowConstraints>
+                           <children>
+                              <Label text="Department" />
+                              <ChoiceBox fx:id="departmentChoiceBox" prefHeight="27.0" prefWidth="146.0" GridPane.columnIndex="1" GridPane.halignment="LEFT" />
+                              <Label text="Project" GridPane.rowIndex="1" />
+                              <ChoiceBox fx:id="projectChoiceBox" prefHeight="27.0" prefWidth="146.0" GridPane.columnIndex="1" GridPane.rowIndex="1" />
+                              <Label text="Location" GridPane.rowIndex="2" />
+                              <ChoiceBox fx:id="locationChoiceBox" prefHeight="27.0" prefWidth="147.0" GridPane.columnIndex="1" GridPane.rowIndex="2" />
+                              <Button fx:id="searchButton" mnemonicParsing="false" onAction="#onSearchButtonClicked" text="Search" GridPane.columnIndex="1" GridPane.rowIndex="3" />
+                           </children>
+                        </GridPane>
+                        <Label text="Table">
+                           <padding>
+                              <Insets top="16.0" />
+                           </padding>
+                        </Label>
+                        <TableView fx:id="employeeTable" prefHeight="200.0">
+                          <columns>
+                          </columns>
+                        </TableView>
+                     </children>
+                  </FlowPane>
+               </children></AnchorPane>
+        </items>
+      </SplitPane>
+      <Label fx:id="label" prefHeight="35.0" prefWidth="368.0" text="ZCorporation" GridPane.columnSpan="2147483647">
+         <font>
+            <Font name="JetBrains Mono Regular" size="29.0" />
+         </font>
+      </Label>
+   </children>
+   <cursor>
+      <Cursor fx:constant="DEFAULT" />
+   </cursor>
+</GridPane>
