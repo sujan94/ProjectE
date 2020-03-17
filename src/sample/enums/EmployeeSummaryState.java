@@ -1,7 +1,5 @@
 package sample.enums;
 
-import com.sun.tools.javac.comp.Lower;
-
 public enum EmployeeSummaryState {
     TOTAL_EMPLOYEE(0),
     HIGH_SALARY(1),

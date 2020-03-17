@@ -5,8 +5,8 @@ import javafx.fxml.FXML;
 import javafx.scene.control.Label;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.TilePane;
-import sample.repository.MainRepository;
 import sample.model.ProjectSummaryModel;
+import sample.repository.MainRepository;
 
 import java.util.HashMap;
 import java.util.List;

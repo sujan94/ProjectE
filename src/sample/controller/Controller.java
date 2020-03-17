@@ -1,29 +1,25 @@
 package sample.controller;
 
-import javafx.beans.value.ChangeListener;
-import javafx.beans.value.ObservableValue;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
-import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
-import javafx.scene.input.InputMethodEvent;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.GridPane;
 import javafx.stage.Stage;
 import sample.model.Department;
-import sample.repository.MainRepository;
 import sample.model.Employee;
+import sample.repository.MainRepository;
 import sample.scenes.NewEmployee;
+import sample.utils.TextFieldUtils;
 
 import java.io.IOException;
 import java.util.List;
 import java.util.Optional;
-import java.util.function.UnaryOperator;
 
 public class Controller {
 
@@ -82,53 +78,53 @@ public class Controller {
     }
 
     private void initializeEmployeeTable() {
-        TableColumn firstNameCol = new TableColumn("First Name");
+        TableColumn<Employee, String> firstNameCol = new TableColumn<>("First Name");
         firstNameCol.setMinWidth(60);
         firstNameCol.setCellValueFactory(
                 new PropertyValueFactory<Employee, String>("fname"));
 
-        TableColumn mNameCol = new TableColumn("First Name");
-        mNameCol.setMinWidth(60);
+        TableColumn<Employee, String> mNameCol = new TableColumn<>("Middle Name");
+        mNameCol.setMinWidth(40);
         mNameCol.setCellValueFactory(
                 new PropertyValueFactory<Employee, String>("minit"));
 
-        TableColumn lastNameCol = new TableColumn("First Name");
+        TableColumn<Employee, String> lastNameCol = new TableColumn<>("Last Name");
         lastNameCol.setMinWidth(60);
         lastNameCol.setCellValueFactory(
                 new PropertyValueFactory<Employee, String>("lname"));
 
-        TableColumn ssnCol = new TableColumn("First Name");
+        TableColumn<Employee, String> ssnCol = new TableColumn<>("SSN");
         ssnCol.setMinWidth(60);
         ssnCol.setCellValueFactory(
                 new PropertyValueFactory<Employee, String>("ssn"));
 
-        TableColumn bdateCol = new TableColumn("First Name");
-        bdateCol.setMinWidth(60);
+        TableColumn<Employee, String> bdateCol = new TableColumn<>("Date of Birth");
+        bdateCol.setPrefWidth(60);
         bdateCol.setCellValueFactory(
                 new PropertyValueFactory<Employee, String>("bdate"));
 
-        TableColumn addressCol = new TableColumn("First Name");
+        TableColumn<Employee, String> addressCol = new TableColumn<>("Address");
         addressCol.setMinWidth(60);
         addressCol.setCellValueFactory(
                 new PropertyValueFactory<Employee, String>("address"));
 
-        TableColumn sexCol = new TableColumn("First Name");
-        sexCol.setMinWidth(60);
+        TableColumn<Employee, String> sexCol = new TableColumn<>("Sex");
+        sexCol.setPrefWidth(30);
         sexCol.setCellValueFactory(
                 new PropertyValueFactory<Employee, String>("sex"));
 
-        TableColumn salaryCol = new TableColumn("First Name");
+        TableColumn<Employee, String> salaryCol = new TableColumn<>("Salary");
         salaryCol.setMinWidth(60);
         salaryCol.setCellValueFactory(
                 new PropertyValueFactory<Employee, String>("salary"));
 
-        TableColumn superssnCol = new TableColumn("First Name");
+        TableColumn<Employee, String> superssnCol = new TableColumn<>("Supervisor's SSN");
         superssnCol.setMinWidth(60);
         superssnCol.setCellValueFactory(
-                new PropertyValueFactory<Employee, String>("superssn"));
+                new PropertyValueFactory<Employee, String>("supervisorssn"));
 
-        TableColumn dnoCol = new TableColumn("First Name");
-        dnoCol.setMinWidth(60);
+        TableColumn<Employee, String> dnoCol = new TableColumn<>("Department Number");
+        dnoCol.setMinWidth(30);
         dnoCol.setCellValueFactory(
                 new PropertyValueFactory<Employee, String>("dno"));
 
@@ -277,17 +273,7 @@ public class Controller {
 
     public void onAddNewEmployeeClicked() {
         TextInputDialog dialog = new TextInputDialog();
-
-        dialog.getEditor().textProperty().addListener((observable, oldValue, newValue) -> {
-            String value = "";
-            value = newValue.replaceAll("[^\\d]", "");
-            ;
-            if (value.length() > 9) {
-                dialog.getEditor().setText(value.substring(0, 9));
-            } else {
-                dialog.getEditor().setText(value);
-            }
-        });
+        TextFieldUtils.setSSNConstraint(dialog.getEditor());
         dialog.setTitle("Manager Verification - 1");
         dialog.setHeaderText("Are you a manager?\nPlease enter your social security number.");
         Optional<String> result = dialog.showAndWait();
