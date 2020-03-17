@@ -8,7 +8,7 @@
 <?import javafx.scene.shape.*?>
 <?import javafx.scene.text.*?>
 
-<AnchorPane prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/10.0.2-internal" xmlns:fx="http://javafx.com/fxml/1" fx:controller="sample.controller.SummaryController">
+<AnchorPane fx:id="rootSummary" prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/10.0.2-internal" xmlns:fx="http://javafx.com/fxml/1" fx:controller="sample.controller.SummaryController">
    <children>
       <Label fx:id="connectionStatus" text="Connection not available" />
       <TilePane fx:id="summaryTilePane" alignment="TOP_CENTER" hgap="16.0" prefHeight="200.0" prefWidth="200.0" vgap="16.0" AnchorPane.bottomAnchor="16.0" AnchorPane.leftAnchor="16.0" AnchorPane.rightAnchor="16.0" AnchorPane.topAnchor="16.0">
@@ -92,6 +92,7 @@
                      <rowConstraints>
                         <RowConstraints minHeight="10.0" vgrow="SOMETIMES" />
                         <RowConstraints />
+                        <RowConstraints />
                      </rowConstraints>
                      <children>
                         <Label fx:id="departmentSummaryfield" text="asdfads" GridPane.halignment="CENTER" GridPane.rowIndex="0" GridPane.valignment="CENTER">
@@ -102,7 +103,7 @@
                               <Glow />
                            </effect>
                         </Label>
-                        <Label  text="employees in Project" GridPane.halignment="CENTER" GridPane.rowIndex="1" GridPane.valignment="CENTER">
+                        <Label text="employees in Project" GridPane.halignment="CENTER" GridPane.rowIndex="1" GridPane.valignment="CENTER">
                            <font>
                               <Font name="Bradley Hand Bold" size="15.0" />
                            </font>
@@ -110,7 +111,7 @@
                               <Glow />
                            </effect>
                         </Label>
-                        <Label fx:id="departmentSummaryLabel" text="Label" GridPane.halignment="CENTER"  GridPane.rowIndex="2" GridPane.valignment="CENTER">
+                        <Label fx:id="departmentSummaryLabel" text="Label" GridPane.halignment="CENTER" GridPane.rowIndex="2" GridPane.valignment="CENTER">
                            <font>
                               <Font name="Bradley Hand Bold" size="19.0" />
                            </font>
@@ -152,9 +153,10 @@
                      <rowConstraints>
                         <RowConstraints minHeight="10.0" vgrow="SOMETIMES" />
                         <RowConstraints />
+                        <RowConstraints />
                      </rowConstraints>
                      <children>
-                        <Label fx:id="projectSummaryfield" text="asdfads" GridPane.halignment="CENTER" GridPane.valignment="CENTER" GridPane.rowIndex="0">
+                        <Label fx:id="projectSummaryfield" text="asdfads" GridPane.halignment="CENTER" GridPane.rowIndex="0" GridPane.valignment="CENTER">
                            <font>
                               <Font name="Bradley Hand Bold" size="37.0" />
                            </font>
@@ -162,7 +164,7 @@
                               <Glow />
                            </effect>
                         </Label>
-                        <Label text="Hours spent in" GridPane.halignment="CENTER" GridPane.valignment="CENTER" GridPane.rowIndex="1">
+                        <Label text="Hours spent in" GridPane.halignment="CENTER" GridPane.rowIndex="1" GridPane.valignment="CENTER">
                            <font>
                               <Font name="Bradley Hand Bold" size="15.0" />
                            </font>

@@ -3,6 +3,7 @@ package sample.controller;
 import javafx.application.Platform;
 import javafx.fxml.FXML;
 import javafx.scene.control.Label;
+import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.TilePane;
 import sample.repository.MainRepository;
 import sample.model.ProjectSummaryModel;
@@ -32,6 +33,8 @@ public class SummaryController  {
     public Label projectSummaryfield;
     @FXML
     public Label projectSummaryLabel;
+
+    public AnchorPane rootSummary;
 
     private Thread employeeThread;
     private Thread projectThread;

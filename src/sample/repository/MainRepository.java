@@ -1,5 +1,6 @@
 package sample.repository;
 
+import sample.model.Department;
 import sample.model.Employee;
 import sample.model.ProjectSummaryModel;
 
@@ -39,15 +40,15 @@ public class MainRepository {
         ResultSet r = p.executeQuery();
     }
 
-    public List<String> getAllDepartment() {
-        List<String> departments = new ArrayList<>();
+    public List<Department> getAllDepartment() {
+        List<Department> departments = new ArrayList<>();
         try {
-            String allDepartmentQuery = "SELECT Dname from DEPARTMENT";
+            String allDepartmentQuery = "SELECT * from DEPARTMENT";
             PreparedStatement p = conn.prepareStatement(allDepartmentQuery);
             p.clearParameters();
             ResultSet r = p.executeQuery();
             while (r.next()) {
-                departments.add(r.getString(1));
+                departments.add(new Department(r.getString(1),r.getString(2),r.getString(3),r.getString(4)));
             }
         } catch (SQLException e) {
             LOGGER.log(Level.WARNING, e.toString());
@@ -94,6 +95,35 @@ public class MainRepository {
     }
 
     public List<Employee> getAllEmployees(String query){
+        List<Employee> employees = new ArrayList<>();
+        try {
+            PreparedStatement p = conn.prepareStatement(query);
+            p.clearParameters();
+            ResultSet r = p.executeQuery();
+            while (r.next()) {
+                employees.add(new Employee(r.getString(1),
+                        r.getString(2),
+                        r.getString(3),
+                        r.getString(4),
+                        r.getString(5),
+                        r.getString(6),
+                        r.getString(7),
+                        r.getString(8),
+                        r.getString(9),
+                        r.getString(10)));
+            }
+        } catch (SQLException e) {
+            LOGGER.log(Level.WARNING, e.toString());
+        }catch (NullPointerException n){
+            LOGGER.log(Level.WARNING, "Database connection not initiated.");
+        }
+        return employees;
+    }
+
+    public List<Employee> getAllSupervisors(){
+        String query = "select DISTINCT e.fname, e.minit, e.lname, e.ssn, e.bdate, e.address, e.sex, e.salary, e.superssn, e.dno\n" +
+                "from  Employee emp, Employee e\n" +
+                "where emp.superssn=e.ssn";
         List<Employee> employees = new ArrayList<>();
         try {
             PreparedStatement p = conn.prepareStatement(query);
@@ -170,5 +200,26 @@ public class MainRepository {
         }
         return projectSummaryModels;
     }
+
+    public boolean isManagerSSN(String ssn){
+        String query ="select ssn \n" +
+                "from  Employee\n" +
+                "where superssn = '"+ssn+"'";
+
+        try {
+            PreparedStatement p = conn.prepareStatement(query);
+            p.clearParameters();
+            ResultSet r = p.executeQuery();
+            return r.next();
+
+        } catch (SQLException e) {
+            LOGGER.log(Level.WARNING, e.toString());
+        }catch (NullPointerException n){
+            LOGGER.log(Level.WARNING, "Database connection not initiated.");
+        }
+        return false;
+    }
+
+
 
 }

@@ -1,20 +1,29 @@
 package sample.controller;
 
+import javafx.beans.value.ChangeListener;
+import javafx.beans.value.ObservableValue;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
+import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
+import javafx.scene.input.InputMethodEvent;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.GridPane;
+import javafx.stage.Stage;
+import sample.model.Department;
 import sample.repository.MainRepository;
 import sample.model.Employee;
+import sample.scenes.NewEmployee;
 
 import java.io.IOException;
 import java.util.List;
+import java.util.Optional;
+import java.util.function.UnaryOperator;
 
 public class Controller {
 
@@ -145,7 +154,9 @@ public class Controller {
 
     private void initializeDeptChoiceBox() {
         departmentList.add(DEFAULT_CHOICE_BOX_STATE);
-        departmentList.addAll(MainRepository.getInstance().getAllDepartment());
+        for (Department d : MainRepository.getInstance().getAllDepartment()) {
+            departmentList.add(d.getDname());
+        }
         departmentChoiceBox.setItems(departmentList);
         departmentChoiceBox.setValue(DEFAULT_CHOICE_BOX_STATE);
     }
@@ -260,6 +271,54 @@ public class Controller {
                 }
                 break;
 
+        }
+
+    }
+
+    public void onAddNewEmployeeClicked() {
+        TextInputDialog dialog = new TextInputDialog();
+
+        dialog.getEditor().textProperty().addListener((observable, oldValue, newValue) -> {
+            String value = "";
+            value = newValue.replaceAll("[^\\d]", "");
+            ;
+            if (value.length() > 9) {
+                dialog.getEditor().setText(value.substring(0, 9));
+            } else {
+                dialog.getEditor().setText(value);
+            }
+        });
+        dialog.setTitle("Manager Verification - 1");
+        dialog.setHeaderText("Are you a manager?\nPlease enter your social security number.");
+        Optional<String> result = dialog.showAndWait();
+        String entered = "none.";
+
+        if (result.isPresent()) {
+            entered = result.get();
+        }
+        if (MainRepository.getInstance().isManagerSSN(entered)) {
+            Alert alert = new Alert(Alert.AlertType.INFORMATION);
+            alert.setTitle("Verification Successful!");
+            alert.setHeaderText(null);
+            alert.setContentText("Verified. \n\nClick OK to continue");
+
+            Optional<ButtonType> buttonResult = alert.showAndWait();
+            if (buttonResult.get() == ButtonType.OK) {
+                // ... start new scene
+                Stage stage = (Stage) rootlayout.getScene().getWindow();
+                try {
+                    new NewEmployee().start(stage);
+                } catch (Exception e) {
+                    e.printStackTrace();
+                }
+            }
+        } else {
+            Alert alert = new Alert(Alert.AlertType.ERROR);
+            alert.setTitle("Verification Failed!");
+            alert.setHeaderText(null);
+            alert.setContentText("Invalid Manager's SSN.\n\n You are not authorize to add/delete action.");
+
+            alert.showAndWait();
         }
 
     }
