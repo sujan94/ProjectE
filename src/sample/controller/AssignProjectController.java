@@ -21,9 +21,9 @@ public class AssignProjectController implements AssignItemController.AssignMoreC
     public Button submitButton;
     public VBox vbox;
     public AnchorPane root;
-    Stage prevStage;
-    List<String> projectNumList = new ArrayList<>();
-    List<AssignItemController> controllers = new ArrayList<>();
+    public Stage prevStage;
+    private List<String> projectNumList = new ArrayList<>();
+    private List<AssignItemController> controllers = new ArrayList<>();
     private Employee e;
 
     public void initialize() {
@@ -60,9 +60,18 @@ public class AssignProjectController implements AssignItemController.AssignMoreC
 
     @Override
     public void onAssignMoreButtonClicked(AssignItemController assignItemController) {
-        ArrayList<String> newProjectList = (ArrayList<String>) ((ArrayList) projectNumList).clone();
-        newProjectList.remove(assignItemController.projectNumberCBox.getValue());
-        addAssignProjectController(newProjectList);
+        if (controllers.size() < 2) {
+            ArrayList<String> newProjectList = (ArrayList<String>) ((ArrayList) projectNumList).clone();
+            newProjectList.remove(assignItemController.projectNumberCBox.getValue());
+            addAssignProjectController(newProjectList);
+        } else {
+            Alert alert = new Alert(Alert.AlertType.ERROR);
+            alert.setTitle("Error occured.");
+            alert.setHeaderText(null);
+            alert.setContentText("Too many project.\n\nAn employee can only be assigned to at most 2 projects.");
+
+            alert.showAndWait();
+        }
     }
 
     public void onAssignSubmitClicked() {

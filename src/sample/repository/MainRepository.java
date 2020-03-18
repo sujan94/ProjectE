@@ -47,13 +47,13 @@ public class MainRepository {
         return departments;
     }
 
-    public List<String> getAllProjects() {
-        List<String> projects = new ArrayList<>();
+    public List<Project> getAllProjects() {
+        List<Project> projects = new ArrayList<>();
         try {
-            String allProjects = "SELECT Pname from PROJECT";
+            String allProjects = "SELECT * from PROJECT";
             ResultSet r = DBUtil.dbExecuteQuery(allProjects);
             while (r.next()) {
-                projects.add(r.getString(1));
+                projects.add(new Project(r.getString(1), r.getString(2), r.getString(3), r.getString(4)));
             }
         } catch (SQLException e) {
             LOGGER.log(Level.WARNING, e.toString());
@@ -280,6 +280,32 @@ public class MainRepository {
         //Execute insert operation
         try {
             DBUtil.dbExecuteUpdate(updateStmt);
+        } catch (SQLException | ClassNotFoundException e) {
+            System.out.print("Error occurred while DELETE Operation: " + e);
+            throw e;
+        }
+    }
+
+    public void deleteEmployee(Employee employee) throws SQLException, ClassNotFoundException {
+        //Declare a insert statement
+        String deleteSmt = "DELETE FROM EMPLOYEE where ssn='" + employee.getSsn() + "'";
+
+        //Execute insert operation
+        try {
+            DBUtil.dbExecuteUpdate(deleteSmt);
+        } catch (SQLException | ClassNotFoundException e) {
+            System.out.print("Error occurred while DELETE Operation: " + e);
+            throw e;
+        }
+    }
+
+    public void deleteProject(Project project) throws SQLException, ClassNotFoundException {
+        //Declare a insert statement
+        String deleteSmt = "DELETE FROM Project where Pnumber='" + project.getPnumber() + "'";
+
+        //Execute insert operation
+        try {
+            DBUtil.dbExecuteUpdate(deleteSmt);
         } catch (SQLException | ClassNotFoundException e) {
             System.out.print("Error occurred while DELETE Operation: " + e);
             throw e;

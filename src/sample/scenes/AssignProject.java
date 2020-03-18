@@ -53,7 +53,6 @@ public class AssignProject extends Application {
         primaryStage.setScene(scene);
         primaryStage.show();
         AssignProjectController controller = fxmlLoader.getController();
-        //    Employee e = new Employee("asdfadf","adf","Adfad","123451233","adf","Adfad","asdfadf","adf","Adfad","3");
         controller.setEmployee(e);
         controller.setPrevStage(primaryStage);
     }

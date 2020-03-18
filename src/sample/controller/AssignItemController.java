@@ -25,7 +25,7 @@ public class AssignItemController {
 
     public void setEmployee(Employee e) {
         if (e != null) {
-            String name = e.getFname() + " " + e.getMinit() + " " + e.getLname();
+            String name = e.getFullName();
             employeeNameCBox.setValue(name);
             employeeNameCBox.setItems(FXCollections.observableArrayList(name));
             employeeNameCBox.setDisable(true);

@@ -2,7 +2,6 @@ package sample.controller;
 
 import javafx.collections.FXCollections;
 import javafx.fxml.FXMLLoader;
-import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.*;
 import javafx.scene.layout.AnchorPane;
@@ -118,7 +117,7 @@ public class AddDependentController {
         Stage stage = new Stage();
         stage.initOwner(root.getScene().getWindow());
         try {
-            stage.setScene(new Scene((Parent) loader.load()));
+            stage.setScene(new Scene(loader.load()));
             prevStage.close();
             // showAndWait will block execution until the window closes...
             stage.showAndWait();

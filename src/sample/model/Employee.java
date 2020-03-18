@@ -65,19 +65,17 @@ public class Employee {
         return dno;
     }
 
+    public String getFullName() {
+        return this.fname + " " + this.minit + " " + this.lname;
+    }
+
     @Override
     public String toString() {
-        return "Employee{" +
-                "fname='" + fname + '\'' +
-                ", minit='" + minit + '\'' +
-                ", lname='" + lname + '\'' +
-                ", ssn='" + ssn + '\'' +
-                ", bdate='" + bdate + '\'' +
-                ", address='" + address + '\'' +
-                ", sex='" + sex + '\'' +
-                ", salary='" + salary + '\'' +
-                ", supervisorssn='" + supervisorssn + '\'' +
-                ", dno='" + dno + '\'' +
-                '}';
+        return "Employee:\n" +
+                "Name = " + getFullName() + '\n' +
+                "SSN = " + ssn + '\n' +
+                "Date of Birth= " + bdate + '\n' +
+                "address= " + address + '\n' +
+                "working in department number " + dno + '\n';
     }
 }

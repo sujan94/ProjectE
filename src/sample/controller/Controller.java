@@ -5,8 +5,11 @@ import io.reactivex.rxjava3.schedulers.Schedulers;
 import javafx.application.Platform;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
+import javafx.event.ActionEvent;
+import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
+import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
@@ -16,13 +19,18 @@ import javafx.scene.layout.GridPane;
 import javafx.stage.Stage;
 import sample.model.Department;
 import sample.model.Employee;
+import sample.model.Project;
 import sample.repository.MainRepository;
 import sample.scenes.NewEmployee;
 import sample.utils.TextFieldUtils;
 
 import java.io.IOException;
+import java.sql.SQLException;
 import java.util.Optional;
 import java.util.concurrent.TimeUnit;
+import java.util.logging.Level;
+
+import static com.sun.xml.internal.ws.spi.db.BindingContextFactory.LOGGER;
 
 public class Controller extends BaseController {
 
@@ -45,6 +53,7 @@ public class Controller extends BaseController {
 
     public Label title;
     public SplitPane splitPane;
+    public Button deleteEmployeeButton;
 
 
     @FXML
@@ -72,9 +81,11 @@ public class Controller extends BaseController {
     private Parent department;
     private Parent project;
     private Parent summary;
+    private Employee selectedEmployee;
 
     public void initialize() {
         splitPane.setVisible(false);
+        deleteEmployeeButton.setVisible(false);
         addLoading();
         initializeLeftNav();
         initializeDeptChoiceBox();
@@ -160,6 +171,25 @@ public class Controller extends BaseController {
         dnoCol.setCellValueFactory(
                 new PropertyValueFactory<Employee, String>("dno"));
 
+        employeeTable.setOnMouseClicked(new EventHandler<MouseEvent>() {
+            @Override
+            public void handle(MouseEvent event) {
+                Node node = ((Node) event.getTarget()).getParent();
+                TableRow<Employee> row;
+                if (node instanceof TableRow) {
+                    row = (TableRow) node;
+                    System.out.println(row.getItem());
+                    deleteEmployeeButton.setVisible(true);
+                    selectedEmployee = row.getItem();
+                } else {
+                    // clicking on text part
+                    LOGGER.log(Level.INFO, "Clicked outside row");
+                    deleteEmployeeButton.setVisible(false);
+                }
+
+            }
+        });
+
         employeeTable.setItems(employeeObservableList);
         employeeTable.getColumns().addAll(firstNameCol, mNameCol, lastNameCol, ssnCol, bdateCol, addressCol, sexCol, salaryCol, superssnCol, dnoCol);
         // Load the default employee table without filter
@@ -183,7 +213,9 @@ public class Controller extends BaseController {
         Observable.fromArray(MainRepository.getInstance().getAllProjects())
                 .subscribeOn(Schedulers.io())
                 .subscribe(projects -> {
-                    projectList.addAll(projects);
+                    for (Project p : projects) {
+                        projectList.add(p.getPname());
+                    }
                 });
         projectChoiceBox.setItems(projectList);
         projectChoiceBox.setValue(DEFAULT_CHOICE_BOX_STATE);
@@ -259,6 +291,7 @@ public class Controller extends BaseController {
         Observable.fromArray(MainRepository.getInstance().getAllEmployees(stringBuilder.toString()))
                 .subscribeOn(Schedulers.io())
                 .subscribe(employeeList -> {
+                    employeeObservableList.clear();
                     employeeObservableList.addAll(employeeList);
                 });
     }
@@ -357,4 +390,39 @@ public class Controller extends BaseController {
         }
 
     }
+
+    public void onDeleteEmployeeClicked(ActionEvent actionEvent) {
+        Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
+        alert.setTitle("Delete Action");
+        alert.setHeaderText(null);
+        alert.setContentText("Are you sure you want to delete " + selectedEmployee.getFullName() + " from the Database?" + "\n\nClick Cancel to abort and OK to continue.");
+
+        Optional<ButtonType> buttonResult = alert.showAndWait();
+        if (buttonResult.get() == ButtonType.OK) {
+            try {
+                MainRepository.getInstance().deleteEmployee(selectedEmployee);
+                Alert infoAlert = new Alert(Alert.AlertType.INFORMATION);
+                infoAlert.setTitle("Delete Action");
+                infoAlert.setHeaderText(null);
+                infoAlert.setContentText(selectedEmployee + " is removed from the company database.");
+
+                infoAlert.showAndWait();
+                deleteEmployeeButton.setVisible(false);
+                onSearchButtonClicked();
+
+            } catch (SQLException | ClassNotFoundException e) {
+                e.printStackTrace();
+                Alert errorAlert = new Alert(Alert.AlertType.ERROR);
+                errorAlert.setTitle("Delete Action");
+                errorAlert.setHeaderText(null);
+                errorAlert.setContentText("Error occured while deleting employee.\n\n The employee most likely " +
+                        "is assigned a project or has dependent in the database.\n\nPlease remove employee from project and remove his/her dependent.");
+
+                errorAlert.showAndWait();
+            }
+        } else if (buttonResult.get() == ButtonType.CANCEL || buttonResult.get() == ButtonType.NO) {
+
+        }
+    }
+
 }

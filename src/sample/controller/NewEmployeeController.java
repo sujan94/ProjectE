@@ -103,8 +103,8 @@ public class NewEmployeeController {
         ObservableList<String> supervisorList = FXCollections.observableArrayList();
         supervisorList.add("None");
         supervisorNameChoiceBox.setValue("None");
-        for (Employee d : supervisors) {
-            supervisorList.add(d.getFname() + " " + d.getMinit() + " " + d.getLname());
+        for (Employee e : supervisors) {
+            supervisorList.add(e.getFname());
         }
         supervisorNameChoiceBox.setItems(supervisorList);
 

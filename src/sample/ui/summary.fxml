@@ -10,10 +10,24 @@
 <AnchorPane fx:id="root" prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/10.0.2-internal"
             xmlns:fx="http://javafx.com/fxml/1" fx:controller="sample.controller.SummaryController">
     <children>
-        <Label fx:id="connectionStatus" text="Connection not available"/>
+        <Label text="Summary" underline="true" AnchorPane.leftAnchor="0.0" GridPane.columnIndex="0"
+               GridPane.rowIndex="0">
+            <font>
+                <Font name="Georgia Bold" size="17.0"/>
+            </font>
+            <padding>
+                <Insets bottom="16.0" left="16.0" right="16.0" top="16.0"/>
+            </padding>
+        </Label>
+        <Label fx:id="connectionStatus" text="Connection not available" textFill="#f20909" AnchorPane.bottomAnchor="0.0"
+               AnchorPane.leftAnchor="0.0">
+            <padding>
+                <Insets bottom="16.0" left="16.0" right="16.0" top="16.0"/>
+            </padding>
+        </Label>
         <TilePane fx:id="summaryTilePane" alignment="TOP_CENTER" hgap="16.0" prefHeight="200.0" prefWidth="200.0"
                   vgap="16.0" AnchorPane.bottomAnchor="16.0" AnchorPane.leftAnchor="16.0" AnchorPane.rightAnchor="16.0"
-                  AnchorPane.topAnchor="16.0">
+                  AnchorPane.topAnchor="42.0">
             <children>
                 <StackPane prefHeight="150.0" prefWidth="200.0">
                     <children>
