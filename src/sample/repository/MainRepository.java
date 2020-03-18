@@ -27,7 +27,7 @@ public class MainRepository {
         return instance;
     }
 
-    public synchronized List<Department> getAllDepartment() {
+    public List<Department> getAllDepartment() {
         List<Department> departments = new ArrayList<>();
         try {
             String allDepartmentQuery = "SELECT * from DEPARTMENT";
@@ -47,7 +47,7 @@ public class MainRepository {
         return departments;
     }
 
-    public synchronized List<String> getAllProjects() {
+    public List<String> getAllProjects() {
         List<String> projects = new ArrayList<>();
         try {
             String allProjects = "SELECT Pname from PROJECT";
@@ -65,7 +65,7 @@ public class MainRepository {
         return projects;
     }
 
-    public synchronized List<String> getAllProjectsInDepartment(String departmentNumber) {
+    public List<String> getAllProjectsInDepartment(String departmentNumber) {
         List<String> projects = new ArrayList<>();
         try {
             String allProjects = "SELECT Pnumber from PROJECT where dnum='" + departmentNumber + "'";
@@ -83,7 +83,7 @@ public class MainRepository {
         return projects;
     }
 
-    public synchronized List<String> getAllLocations() {
+    public List<String> getAllLocations() {
         List<String> locations = new ArrayList<>();
         try {
             String allLocations = "SELECT Dlocation from DEPT_LOCATIONS";
@@ -101,7 +101,7 @@ public class MainRepository {
         return locations;
     }
 
-    public synchronized List<Employee> getAllEmployees(String query) {
+    public List<Employee> getAllEmployees(String query) {
         List<Employee> employees = new ArrayList<>();
         try {
             ResultSet r = DBUtil.dbExecuteQuery(query);
@@ -127,7 +127,7 @@ public class MainRepository {
         return employees;
     }
 
-    public synchronized List<Employee> getAllSupervisors() {
+    public List<Employee> getAllSupervisors() {
         String query = "select DISTINCT e.fname, e.minit, e.lname, e.ssn, e.bdate, e.address, e.sex, e.salary, e.superssn, e.dno\n" +
                 "from  Employee emp, Employee e\n" +
                 "where emp.superssn=e.ssn";

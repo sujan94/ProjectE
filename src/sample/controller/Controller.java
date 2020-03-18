@@ -1,5 +1,8 @@
 package sample.controller;
 
+import io.reactivex.rxjava3.core.Observable;
+import io.reactivex.rxjava3.schedulers.Schedulers;
+import javafx.application.Platform;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
@@ -18,8 +21,8 @@ import sample.scenes.NewEmployee;
 import sample.utils.TextFieldUtils;
 
 import java.io.IOException;
-import java.util.List;
 import java.util.Optional;
+import java.util.concurrent.TimeUnit;
 
 public class Controller extends BaseController {
 
@@ -41,6 +44,8 @@ public class Controller extends BaseController {
     public GridPane root;
 
     public Label title;
+    public SplitPane splitPane;
+
 
     @FXML
     private ChoiceBox<String> projectChoiceBox;
@@ -69,11 +74,39 @@ public class Controller extends BaseController {
     private Parent summary;
 
     public void initialize() {
+        splitPane.setVisible(false);
+        addLoading();
         initializeLeftNav();
         initializeDeptChoiceBox();
         initializeProjectChoiceBox();
         initalizeLocationChoiceBox();
         initializeEmployeeTable();
+    }
+
+    private void addLoading() {
+        try {
+            FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("../ui/loading_scene.fxml"));
+            Parent loading = fxmlLoader.load();
+            LoadingController loadingController = fxmlLoader.getController();
+            root.getChildren().add(loading);
+            GridPane.setConstraints(loading, 0, 1);
+            Observable.interval(0, (long) 1.7, TimeUnit.SECONDS)
+                    .take(5)
+                    .subscribe(aLong -> {
+                        System.out.println(aLong + "////");
+                        float progressValue = (float) (0.3 * aLong);
+                        Platform.runLater(() -> {
+                            loadingController.setProgress(progressValue);
+                            if (progressValue > 1.0f) {
+                                root.getChildren().remove(loading);
+                                splitPane.setVisible(true);
+
+                            }
+                        });
+                    });
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
     }
 
     private void initializeEmployeeTable() {
@@ -135,23 +168,36 @@ public class Controller extends BaseController {
 
     private void initalizeLocationChoiceBox() {
         locationList.add(DEFAULT_CHOICE_BOX_STATE);
-        locationList.addAll(MainRepository.getInstance().getAllLocations());
+        Observable.fromArray(MainRepository.getInstance().getAllLocations())
+                .subscribeOn(Schedulers.io())
+                .subscribe(locations -> {
+                    locationList.addAll(locations);
+                });
+
         locationChoiceBox.setItems(locationList);
         locationChoiceBox.setValue(DEFAULT_CHOICE_BOX_STATE);
     }
 
     private void initializeProjectChoiceBox() {
         projectList.add(DEFAULT_CHOICE_BOX_STATE);
-        projectList.addAll(MainRepository.getInstance().getAllProjects());
+        Observable.fromArray(MainRepository.getInstance().getAllProjects())
+                .subscribeOn(Schedulers.io())
+                .subscribe(projects -> {
+                    projectList.addAll(projects);
+                });
         projectChoiceBox.setItems(projectList);
         projectChoiceBox.setValue(DEFAULT_CHOICE_BOX_STATE);
     }
 
     private void initializeDeptChoiceBox() {
         departmentList.add(DEFAULT_CHOICE_BOX_STATE);
-        for (Department d : MainRepository.getInstance().getAllDepartment()) {
-            departmentList.add(d.getDname());
-        }
+        Observable.fromArray(MainRepository.getInstance().getAllDepartment())
+                .subscribeOn(Schedulers.io())
+                .subscribe(departments -> {
+                    for (Department d : departments) {
+                        departmentList.add(d.getDname());
+                    }
+                });
         departmentChoiceBox.setItems(departmentList);
         departmentChoiceBox.setValue(DEFAULT_CHOICE_BOX_STATE);
     }
@@ -162,7 +208,6 @@ public class Controller extends BaseController {
         listItem.add("Department");
         listItem.add("Project");
         list.setItems(listItem);
-        System.out.println(list);
     }
 
     public void onSearchButtonClicked() {
@@ -211,8 +256,11 @@ public class Controller extends BaseController {
             stringBuilder.append("where Dno = Dnumber and Dname ='").append(departmentValue).append("'");
         }
 
-        List<Employee> employeeList = MainRepository.getInstance().getAllEmployees(stringBuilder.toString());
-        employeeObservableList.addAll(employeeList);
+        Observable.fromArray(MainRepository.getInstance().getAllEmployees(stringBuilder.toString()))
+                .subscribeOn(Schedulers.io())
+                .subscribe(employeeList -> {
+                    employeeObservableList.addAll(employeeList);
+                });
     }
 
     public void onItemSelectedOnLeftNav(MouseEvent arg0) {
