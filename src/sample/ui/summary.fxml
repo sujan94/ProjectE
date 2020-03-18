@@ -50,16 +50,16 @@
                                 <Label fx:id="employeeSummaryfield" text="asdfads" wrapText="true"
                                        GridPane.halignment="CENTER" GridPane.valignment="CENTER">
                                     <font>
-                                        <Font name="Bradley Hand Bold" size="37.0"/>
+                                        <Font name="Georgia Bold" size="37.0"/>
                                     </font>
                                     <effect>
                                         <Glow/>
                                     </effect>
                                 </Label>
-                                <Label fx:id="employeeSummaryLabel" text="Label" GridPane.halignment="CENTER"
-                                       GridPane.rowIndex="1" GridPane.valignment="CENTER">
+                                <Label fx:id="employeeSummaryLabel" text="Label" wrapText="true"
+                                       GridPane.halignment="CENTER" GridPane.rowIndex="1" GridPane.valignment="CENTER">
                                     <font>
-                                        <Font name="Bradley Hand Bold" size="19.0"/>
+                                        <Font name="Georgia Bold" size="19.0"/>
                                     </font>
                                 </Label>
                             </children>
@@ -108,28 +108,28 @@
                                 <RowConstraints/>
                             </rowConstraints>
                             <children>
-                                <Label fx:id="departmentSummaryfield" text="asdfads" GridPane.halignment="CENTER"
-                                       GridPane.rowIndex="0" GridPane.valignment="CENTER">
+                                <Label fx:id="departmentSummaryfield" text="asdfads" wrapText="true"
+                                       GridPane.halignment="CENTER" GridPane.rowIndex="0" GridPane.valignment="CENTER">
                                     <font>
-                                        <Font name="Bradley Hand Bold" size="37.0"/>
+                                        <Font name="Georgia Bold" size="37.0"/>
                                     </font>
                                     <effect>
                                         <Glow/>
                                     </effect>
                                 </Label>
-                                <Label text="employees in Project" GridPane.halignment="CENTER" GridPane.rowIndex="1"
-                                       GridPane.valignment="CENTER">
+                                <Label text="employees in Project" wrapText="true" GridPane.halignment="CENTER"
+                                       GridPane.rowIndex="1" GridPane.valignment="CENTER">
                                     <font>
-                                        <Font name="Bradley Hand Bold" size="15.0"/>
+                                        <Font name="Georgia Bold" size="15.0"/>
                                     </font>
                                     <effect>
                                         <Glow/>
                                     </effect>
                                 </Label>
-                                <Label fx:id="departmentSummaryLabel" text="Label" GridPane.halignment="CENTER"
-                                       GridPane.rowIndex="2" GridPane.valignment="CENTER">
+                                <Label fx:id="departmentSummaryLabel" text="Label" underline="true" wrapText="true"
+                                       GridPane.halignment="CENTER" GridPane.rowIndex="2" GridPane.valignment="CENTER">
                                     <font>
-                                        <Font name="Bradley Hand Bold" size="19.0"/>
+                                        <Font name="Georgia Bold" size="19.0"/>
                                     </font>
                                 </Label>
                             </children>
@@ -175,28 +175,28 @@
                                 <RowConstraints/>
                             </rowConstraints>
                             <children>
-                                <Label fx:id="projectSummaryfield" text="asdfads" GridPane.halignment="CENTER"
-                                       GridPane.rowIndex="0" GridPane.valignment="CENTER">
+                                <Label fx:id="projectSummaryfield" text="asdfads" wrapText="true"
+                                       GridPane.halignment="CENTER" GridPane.rowIndex="0" GridPane.valignment="CENTER">
                                     <font>
-                                        <Font name="Bradley Hand Bold" size="37.0"/>
+                                        <Font name="Georgia Bold" size="37.0"/>
                                     </font>
                                     <effect>
                                         <Glow/>
                                     </effect>
                                 </Label>
-                                <Label text="Hours spent in" GridPane.halignment="CENTER" GridPane.rowIndex="1"
-                                       GridPane.valignment="CENTER">
+                                <Label text="Hours spent in" wrapText="true" GridPane.halignment="CENTER"
+                                       GridPane.rowIndex="1" GridPane.valignment="CENTER">
                                     <font>
-                                        <Font name="Bradley Hand Bold" size="15.0"/>
+                                        <Font name="Georgia Bold" size="15.0"/>
                                     </font>
                                     <effect>
                                         <Glow/>
                                     </effect>
                                 </Label>
-                                <Label fx:id="projectSummaryLabel" text="Label" GridPane.halignment="CENTER"
-                                       GridPane.rowIndex="2" GridPane.valignment="CENTER">
+                                <Label fx:id="projectSummaryLabel" text="Label" underline="true" wrapText="true"
+                                       GridPane.halignment="CENTER" GridPane.rowIndex="2" GridPane.valignment="CENTER">
                                     <font>
-                                        <Font name="Bradley Hand Bold" size="19.0"/>
+                                        <Font name="Georgia Bold" size="19.0"/>
                                     </font>
                                 </Label>
                             </children>

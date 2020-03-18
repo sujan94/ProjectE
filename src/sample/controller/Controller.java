@@ -21,7 +21,7 @@ import java.io.IOException;
 import java.util.List;
 import java.util.Optional;
 
-public class Controller {
+public class Controller extends BaseController {
 
     private static final String DEFAULT_CHOICE_BOX_STATE = "Any";
 
@@ -222,6 +222,7 @@ public class Controller {
                 rightBodyAnchor.getChildren().remove(project);
                 rightBodyAnchor.getChildren().remove(department);
                 rightBodyAnchor.getChildren().remove(summary);
+                System.out.println(isSummaryRoot + "11111");
                 try {
                     summary = FXMLLoader.load(getClass().getResource("../ui/summary.fxml"));
                 } catch (IOException e) {
@@ -235,6 +236,8 @@ public class Controller {
                 rightBodyAnchor.getChildren().remove(project);
                 rightBodyAnchor.getChildren().remove(department);
                 rightBodyAnchor.getChildren().remove(summary);
+                isSummaryRoot = false;
+                System.out.println(isSummaryRoot + "#######");
 
                 break;
             case 2:
@@ -242,6 +245,8 @@ public class Controller {
                     rightBodyAnchor.getChildren().remove(project);
                     rightBodyAnchor.getChildren().remove(department);
                     rightBodyAnchor.getChildren().remove(summary);
+                    isSummaryRoot = false;
+                    System.out.println(isSummaryRoot + "#######");
                     department = FXMLLoader.load(getClass().getResource("../ui/department.fxml"));
                     summaryChildBody.setVisible(false);
                     rightBodyAnchor.getChildren().add(department);
@@ -254,6 +259,7 @@ public class Controller {
                     rightBodyAnchor.getChildren().remove(department);
                     rightBodyAnchor.getChildren().remove(project);
                     rightBodyAnchor.getChildren().remove(summary);
+                    isSummaryRoot = false;
                     project = FXMLLoader.load(getClass().getResource("../ui/project.fxml"));
                     summaryChildBody.setVisible(false);
                     rightBodyAnchor.getChildren().add(project);

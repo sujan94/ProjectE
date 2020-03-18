@@ -12,7 +12,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-public class SummaryController {
+public class SummaryController extends BaseController {
 
     @FXML
     public Label employeeSummaryfield;
@@ -36,8 +36,6 @@ public class SummaryController {
 
     public AnchorPane rootSummary;
     Map<Integer, String> employeeSummary = new HashMap<>();
-    private Thread employeeThread;
-    private Thread projectThread;
 
     public void setConnectionAvailable(boolean connectionAvailable) {
         connectionStatus.setVisible(!connectionAvailable);
@@ -45,6 +43,8 @@ public class SummaryController {
     }
 
     public void initialize() {
+        isSummaryRoot = true;
+        System.out.println(isSummaryRoot + ".....");
         fetchEmployeeSummary();
         fetchProjectSummary();
     }
@@ -55,7 +55,8 @@ public class SummaryController {
             @Override
             public void run() {
                 int count = 0;
-                while (true) {
+                while (isSummaryRoot) {
+                    System.out.println(isSummaryRoot + "  inside");
                     int finalCount = count;
                     setConnectionAvailable(projectSummaryModelList != null && !projectSummaryModelList.isEmpty());
                     System.out.println(Thread.currentThread().getId());
@@ -80,7 +81,7 @@ public class SummaryController {
             }
         };
 
-        projectThread = new Thread(runnable);
+        Thread projectThread = new Thread(runnable);
         projectThread.start();
 
     }
@@ -93,7 +94,7 @@ public class SummaryController {
             @Override
             public void run() {
                 int count = 0;
-                while (true) {
+                while (isSummaryRoot) {
                     int finalCount = count;
                     String value = MainRepository.getInstance().getSummary(finalCount % employeeSummary.size());
                     setConnectionAvailable(value != null);
@@ -115,7 +116,7 @@ public class SummaryController {
                 }
             }
         };
-        employeeThread = new Thread(runnable);
+        Thread employeeThread = new Thread(runnable);
         employeeThread.start();
     }
 

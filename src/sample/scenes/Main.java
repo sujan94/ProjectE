@@ -12,11 +12,11 @@ public class Main extends Application {
     public static void main(String[] args) {
         launch(args);
     }
-
+    Controller controller;
     @Override
     public void start(Stage primaryStage) throws Exception {
         FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("../ui/sample.fxml"));
-        Controller controller = fxmlLoader.getController();
+        controller = fxmlLoader.getController();
         Parent root = fxmlLoader.load();
         primaryStage.setTitle("Hello World");
         Scene scene = new Scene(root, 900, 575);
