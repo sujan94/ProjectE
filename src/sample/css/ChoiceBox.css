@@ -1,0 +1,4 @@
+.choice-box.error {
+  -fx-choice-box-border: red ;
+  -fx-background-color: red;
+}

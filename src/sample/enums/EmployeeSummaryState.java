@@ -8,14 +8,13 @@ public enum EmployeeSummaryState {
     // declaring private variable for getting values
     private int action;
 
-    // getter method
-    public int getAction() {
-        return this.action;
-    }
-
-
     // enum constructor - cannot be public or protected
     EmployeeSummaryState(int action) {
         this.action = action;
+    }
+
+    // getter method
+    public int getAction() {
+        return this.action;
     }
 }

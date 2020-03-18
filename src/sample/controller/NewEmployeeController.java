@@ -6,18 +6,25 @@ import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.*;
+import javafx.scene.layout.AnchorPane;
 import javafx.stage.Stage;
 import javafx.util.StringConverter;
 import sample.model.Department;
 import sample.model.Employee;
 import sample.repository.MainRepository;
+import sample.scenes.AssignProject;
+import sample.utils.ChoiceBoxUtils;
 import sample.utils.TextFieldUtils;
 
 import java.io.IOException;
+import java.sql.SQLException;
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
+
+import static sample.utils.DateUtils.getFormattedDOB;
 
 public class NewEmployeeController {
     public Label firstNameLabel;
@@ -34,11 +41,10 @@ public class NewEmployeeController {
     public TextField emailAddressField;
     public Button goBackButton;
     public Button submitButton;
-
+    public AnchorPane root;
+    Stage prevStage;
     private List<Department> departments = new ArrayList<>();
     private List<Employee> supervisors = new ArrayList<>();
-
-    Stage prevStage;
 
     public void setPrevStage(Stage stage) {
         this.prevStage = stage;
@@ -50,11 +56,12 @@ public class NewEmployeeController {
         initializeDepartmentNumberChoiceBox();
         addTextFieldConstraint();
         addDateFormatter();
+
     }
 
     private void addDateFormatter() {
         bdateField.setConverter(new StringConverter<LocalDate>() {
-            String pattern = "yyyy-MM-dd";
+            String pattern = "dd-MM-yy";
             DateTimeFormatter dateFormatter = DateTimeFormatter.ofPattern(pattern);
 
             @Override
@@ -127,6 +134,84 @@ public class NewEmployeeController {
     }
 
     public void onSubmitButtonClicked() {
+        // Validate all fields
+        if (validateInput()) {
+            // validate there are values for depart num and supervisor ssn.
+            String departmentNum = getDepartNum();
+            String supervisorSSN = getSupervisorSSN();
+            String birthDate = getFormattedDOB(bdateField.getEditor().getText());
+            if (departmentNum != null && supervisorSSN != null) {
+                try {
+                    MainRepository.getInstance().addEmployee(firstNameField.getText(),
+                            middleNameField.getText(), lastNameField.getText(),
+                            ssnField.getText(), birthDate, addressField.getText(),
+                            sexChoiceBox.getValue(), salaryField.getText(), supervisorSSN,
+                            departmentNum, emailAddressField.getText());
 
+                    Alert alert = new Alert(Alert.AlertType.INFORMATION);
+                    alert.setTitle("Submission successful!");
+                    alert.setHeaderText(null);
+                    alert.setContentText("Employee with" + firstNameField.getText() + " " + lastNameField.getText() + " is added to the datebase");
+
+                    Optional<ButtonType> buttonResult = alert.showAndWait();
+                    if (buttonResult.get() == ButtonType.OK) {
+                        // ... start new scene
+                        Employee employee = new Employee(firstNameField.getText(),
+                                middleNameField.getText(), lastNameField.getText(),
+                                ssnField.getText(), birthDate, addressField.getText(),
+                                sexChoiceBox.getValue(), salaryField.getText(), supervisorSSN,
+                                departmentNum);
+                        Stage stage = (Stage) root.getScene().getWindow();
+                        try {
+                            new AssignProject(employee).start(stage);
+                        } catch (Exception e) {
+                            e.printStackTrace();
+                        }
+                    }
+
+                } catch (SQLException | ClassNotFoundException e) {
+                    e.printStackTrace();
+                    Alert alert = new Alert(Alert.AlertType.ERROR);
+                    alert.setTitle("Error!");
+                    alert.setHeaderText(null);
+                    alert.setContentText("Invalid inputs. Employee cannot be added.");
+
+                    alert.showAndWait();
+                }
+            }
+        }
+    }
+
+
+    private String getSupervisorSSN() {
+        // get correct supervisor ssn num;
+        for (Employee e : supervisors) {
+            if (supervisorNameChoiceBox.getValue().contains(e.getFname()) &&
+                    supervisorNameChoiceBox.getValue().contains(e.getMinit()) &&
+                    supervisorNameChoiceBox.getValue().contains(e.getLname())) {
+                return e.getSsn();
+            }
+        }
+        return null;
+    }
+
+    private String getDepartNum() {
+        // Get correct  depart num
+        for (Department d : departments) {
+            if (d.getDname().equals(departNumberField.getValue())) {
+                return d.getDnumber();
+            }
+        }
+        return null;
+    }
+
+    private boolean validateInput() {
+        return TextFieldUtils.isValidInput(ssnField) &&
+                TextFieldUtils.isValidInput(firstNameField) &&
+                TextFieldUtils.isValidInput(lastNameField) &&
+                TextFieldUtils.isValidInput(salaryField) &&
+                TextFieldUtils.isValidInput(emailAddressField) &&
+                ChoiceBoxUtils.isValidInput(departNumberField) &&
+                ChoiceBoxUtils.isValidInput(supervisorNameChoiceBox);
     }
 }

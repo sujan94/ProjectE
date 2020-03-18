@@ -10,14 +10,25 @@ import javafx.scene.control.Alert;
 import javafx.scene.control.ButtonType;
 import javafx.stage.Stage;
 import javafx.stage.WindowEvent;
-import sample.controller.NewEmployeeController;
+import sample.controller.AssignProjectController;
+import sample.model.Employee;
 
 import java.util.Optional;
 
-public class NewEmployee extends Application {
+public class AssignProject extends Application {
 
+    private Employee e;
+
+    public AssignProject(Employee e) {
+        this.e = e;
+    }
+
+    public AssignProject() {
+    }
+
+    @Override
     public void start(Stage primaryStage) throws Exception {
-        FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("../ui/addnewEmployee.fxml"));
+        FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("../ui/assign_project.fxml"));
         Parent root = fxmlLoader.load();
         primaryStage.setTitle("Hello World");
         primaryStage.setOnCloseRequest(new EventHandler<WindowEvent>() {
@@ -41,9 +52,9 @@ public class NewEmployee extends Application {
         scene.getStylesheets().add(getClass().getResource("../css/ChoiceBox.css").toExternalForm());
         primaryStage.setScene(scene);
         primaryStage.show();
-        NewEmployeeController controller = fxmlLoader.getController();
+        AssignProjectController controller = fxmlLoader.getController();
+        //    Employee e = new Employee("asdfadf","adf","Adfad","123451233","adf","Adfad","asdfadf","adf","Adfad","3");
+        controller.setEmployee(e);
         controller.setPrevStage(primaryStage);
     }
-
-
 }

@@ -1,0 +1,70 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+<?import javafx.scene.text.Font?>
+<AnchorPane xmlns:fx="http://javafx.com/fxml/1" fx:id="root" prefHeight="400.0" prefWidth="600.0"
+            xmlns="http://javafx.com/javafx/10.0.2-internal" fx:controller="sample.controller.AddDependentController">
+    <children>
+        <Label text="Add Dependents" underline="true" AnchorPane.leftAnchor="16.0" AnchorPane.topAnchor="8.0">
+            <font>
+                <Font name="System Bold" size="21.0"/>
+            </font>
+            <padding>
+                <Insets bottom="4.0" left="4.0" right="4.0" top="4.0"/>
+            </padding>
+        </Label>
+        <GridPane hgap="16.0" vgap="16.0" AnchorPane.leftAnchor="16.0" AnchorPane.topAnchor="60.0">
+            <columnConstraints>
+                <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0"/>
+                <ColumnConstraints/>
+            </columnConstraints>
+            <rowConstraints>
+                <RowConstraints minHeight="10.0" vgrow="SOMETIMES"/>
+                <RowConstraints/>
+                <RowConstraints/>
+                <RowConstraints/>
+                <RowConstraints/>
+            </rowConstraints>
+
+            <children>
+                <Label text="Employee Name" GridPane.columnIndex="0" GridPane.rowIndex="0"/>
+                <ChoiceBox fx:id="employeeNameCBox" GridPane.columnIndex="1" GridPane.rowIndex="0"/>
+            </children>
+
+            <children>
+                <Label text="Employee SSN" GridPane.columnIndex="0" GridPane.rowIndex="1"/>
+                <TextField fx:id="employeeSSN" disable="true" GridPane.columnIndex="1" GridPane.rowIndex="1"/>
+            </children>
+
+            <children>
+                <Label text="Dependent Name" GridPane.columnIndex="0" GridPane.rowIndex="2"/>
+                <TextField fx:id="dependentName" GridPane.columnIndex="1" GridPane.rowIndex="2"/>
+            </children>
+
+            <children>
+                <Label text="Dependent Sex" GridPane.columnIndex="0" GridPane.rowIndex="3"/>
+                <ChoiceBox fx:id="dependentSex" GridPane.columnIndex="1" GridPane.rowIndex="3"/>
+            </children>
+
+            <children>
+                <Label text="Date of Birth" GridPane.columnIndex="0" GridPane.rowIndex="4"/>
+                <DatePicker fx:id="dependentDOB" GridPane.columnIndex="1" GridPane.rowIndex="4"/>
+
+            </children>
+
+            <children>
+                <Label text="Relationship" GridPane.columnIndex="0" GridPane.rowIndex="5"/>
+                <TextField fx:id="relationship" GridPane.columnIndex="1" GridPane.rowIndex="5"/>
+                <Button fx:id="submitButton" mnemonicParsing="false" onAction="#onSubmitButtonClicked" text="Submit"
+                        GridPane.columnIndex="1" GridPane.halignment="CENTER" GridPane.rowIndex="6"/>
+                <Button fx:id="cancelButton" mnemonicParsing="false" onAction="#onCancelButtonClicked"
+                        text="No Dependent" GridPane.columnIndex="0" GridPane.halignment="CENTER"
+                        GridPane.rowIndex="6"/>
+            </children>
+        </GridPane>
+
+    </children>
+
+</AnchorPane>

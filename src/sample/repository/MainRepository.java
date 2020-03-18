@@ -1,10 +1,10 @@
 package sample.repository;
 
-import sample.model.Department;
-import sample.model.Employee;
-import sample.model.ProjectSummaryModel;
+import sample.model.*;
+import sample.utils.DBUtil;
 
-import java.sql.*;
+import java.sql.ResultSet;
+import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.logging.Level;
@@ -15,9 +15,9 @@ import static sample.enums.EmployeeSummaryState.*;
 public class MainRepository {
 
     private static MainRepository instance;
-    private Connection conn;
 
     private MainRepository() {
+        DBUtil.startDriverCheck();
     }
 
     public static MainRepository getInstance() {
@@ -26,80 +26,85 @@ public class MainRepository {
         }
         return instance;
     }
-    public void initiateConnection() throws SQLException {
-        try {
-            Class.forName("oracle.jdbc.driver.OracleDriver");
-        } catch (ClassNotFoundException x) {
-            System.out.println("Driver could not be loaded");
-        }
 
-        // TODO create connection here...
-        String stmt1 = "select Lname, Salary from EMPLOYEE";
-        PreparedStatement p = conn.prepareStatement(stmt1);
-        p.clearParameters();
-        ResultSet r = p.executeQuery();
-    }
-
-    public List<Department> getAllDepartment() {
+    public synchronized List<Department> getAllDepartment() {
         List<Department> departments = new ArrayList<>();
         try {
             String allDepartmentQuery = "SELECT * from DEPARTMENT";
-            PreparedStatement p = conn.prepareStatement(allDepartmentQuery);
-            p.clearParameters();
-            ResultSet r = p.executeQuery();
+            ResultSet r = DBUtil.dbExecuteQuery(allDepartmentQuery);
             while (r.next()) {
-                departments.add(new Department(r.getString(1),r.getString(2),r.getString(3),r.getString(4)));
+                departments.add(new Department(r.getString(1), r.getString(2), r.getString(3), r.getString(4)));
             }
         } catch (SQLException e) {
+            e.printStackTrace();
             LOGGER.log(Level.WARNING, e.toString());
-        } catch (NullPointerException n){
+        } catch (NullPointerException e) {
+            e.printStackTrace();
             LOGGER.log(Level.WARNING, "Database connection not initiated.");
+        } catch (ClassNotFoundException e) {
+            e.printStackTrace();
         }
         return departments;
     }
 
-    public List<String> getAllProjects() {
+    public synchronized List<String> getAllProjects() {
         List<String> projects = new ArrayList<>();
         try {
             String allProjects = "SELECT Pname from PROJECT";
-            PreparedStatement p = conn.prepareStatement(allProjects);
-            p.clearParameters();
-            ResultSet r = p.executeQuery();
+            ResultSet r = DBUtil.dbExecuteQuery(allProjects);
             while (r.next()) {
                 projects.add(r.getString(1));
             }
         } catch (SQLException e) {
             LOGGER.log(Level.WARNING, e.toString());
-        }catch (NullPointerException n){
+        } catch (NullPointerException n) {
             LOGGER.log(Level.WARNING, "Database connection not initiated.");
+        } catch (ClassNotFoundException e) {
+            e.printStackTrace();
         }
         return projects;
     }
 
-    public List<String> getAllLocations() {
+    public synchronized List<String> getAllProjectsInDepartment(String departmentNumber) {
+        List<String> projects = new ArrayList<>();
+        try {
+            String allProjects = "SELECT Pnumber from PROJECT where dnum='" + departmentNumber + "'";
+            ResultSet r = DBUtil.dbExecuteQuery(allProjects);
+            while (r.next()) {
+                projects.add(r.getString(1));
+            }
+        } catch (SQLException e) {
+            LOGGER.log(Level.WARNING, e.toString());
+        } catch (NullPointerException n) {
+            LOGGER.log(Level.WARNING, "Database connection not initiated.");
+        } catch (ClassNotFoundException e) {
+            e.printStackTrace();
+        }
+        return projects;
+    }
+
+    public synchronized List<String> getAllLocations() {
         List<String> locations = new ArrayList<>();
         try {
             String allLocations = "SELECT Dlocation from DEPT_LOCATIONS";
-            PreparedStatement p = conn.prepareStatement(allLocations);
-            p.clearParameters();
-            ResultSet r = p.executeQuery();
+            ResultSet r = DBUtil.dbExecuteQuery(allLocations);
             while (r.next()) {
                 locations.add(r.getString(1));
             }
         } catch (SQLException e) {
             LOGGER.log(Level.WARNING, e.toString());
-        }catch (NullPointerException n){
+        } catch (NullPointerException n) {
             LOGGER.log(Level.WARNING, "Database connection not initiated.");
+        } catch (ClassNotFoundException e) {
+            e.printStackTrace();
         }
         return locations;
     }
 
-    public List<Employee> getAllEmployees(String query){
+    public synchronized List<Employee> getAllEmployees(String query) {
         List<Employee> employees = new ArrayList<>();
         try {
-            PreparedStatement p = conn.prepareStatement(query);
-            p.clearParameters();
-            ResultSet r = p.executeQuery();
+            ResultSet r = DBUtil.dbExecuteQuery(query);
             while (r.next()) {
                 employees.add(new Employee(r.getString(1),
                         r.getString(2),
@@ -114,21 +119,21 @@ public class MainRepository {
             }
         } catch (SQLException e) {
             LOGGER.log(Level.WARNING, e.toString());
-        }catch (NullPointerException n){
+        } catch (NullPointerException n) {
             LOGGER.log(Level.WARNING, "Database connection not initiated.");
+        } catch (ClassNotFoundException e) {
+            e.printStackTrace();
         }
         return employees;
     }
 
-    public List<Employee> getAllSupervisors(){
+    public synchronized List<Employee> getAllSupervisors() {
         String query = "select DISTINCT e.fname, e.minit, e.lname, e.ssn, e.bdate, e.address, e.sex, e.salary, e.superssn, e.dno\n" +
                 "from  Employee emp, Employee e\n" +
                 "where emp.superssn=e.ssn";
         List<Employee> employees = new ArrayList<>();
         try {
-            PreparedStatement p = conn.prepareStatement(query);
-            p.clearParameters();
-            ResultSet r = p.executeQuery();
+            ResultSet r = DBUtil.dbExecuteQuery(query);
             while (r.next()) {
                 employees.add(new Employee(r.getString(1),
                         r.getString(2),
@@ -143,40 +148,41 @@ public class MainRepository {
             }
         } catch (SQLException e) {
             LOGGER.log(Level.WARNING, e.toString());
-        }catch (NullPointerException n){
+        } catch (NullPointerException n) {
             LOGGER.log(Level.WARNING, "Database connection not initiated.");
+        } catch (ClassNotFoundException e) {
+            e.printStackTrace();
         }
         return employees;
     }
 
-    public String getSummary(int employeeSummaryState){
-        String query="";
-        if(employeeSummaryState== TOTAL_EMPLOYEE.getAction()){
+    public synchronized String getSummary(int employeeSummaryState) {
+        String query = "";
+        if (employeeSummaryState == TOTAL_EMPLOYEE.getAction()) {
             query = "select count(fname) from Employee";
-        }else if(employeeSummaryState== HIGH_SALARY.getAction()){
+        } else if (employeeSummaryState == HIGH_SALARY.getAction()) {
             query = "select max(salary) from Employee";
-        }
-        else if(employeeSummaryState== LOW_SALARY.getAction()){
+        } else if (employeeSummaryState == LOW_SALARY.getAction()) {
             query = "select min(salary) from Employee";
-        }else{
+        } else {
             return null;
         }
         try {
-            PreparedStatement p = conn.prepareStatement(query);
-            p.clearParameters();
-            ResultSet r = p.executeQuery();
+            ResultSet r = DBUtil.dbExecuteQuery(query);
             while (r.next()) {
                 return r.getString(1);
             }
         } catch (SQLException e) {
             LOGGER.log(Level.WARNING, e.toString());
-        }catch (NullPointerException n){
+        } catch (NullPointerException n) {
             LOGGER.log(Level.WARNING, "Database connection not initiated.");
+        } catch (ClassNotFoundException e) {
+            e.printStackTrace();
         }
         return null;
     }
 
-    public List<ProjectSummaryModel> getProjectSummary(){
+    public synchronized List<ProjectSummaryModel> getProjectSummary() {
         List<ProjectSummaryModel> projectSummaryModels = new ArrayList<>();
         String query = "select Pname, Pno, Count(Pno), sum(hours)\n" +
                 "from Works_on, Project\n" +
@@ -184,9 +190,7 @@ public class MainRepository {
                 "group by Pno, Pname";
 
         try {
-            PreparedStatement p = conn.prepareStatement(query);
-            p.clearParameters();
-            ResultSet r = p.executeQuery();
+            ResultSet r = DBUtil.dbExecuteQuery(query);
             while (r.next()) {
                 projectSummaryModels.add(new ProjectSummaryModel(r.getString(1),
                         r.getString(2),
@@ -195,31 +199,91 @@ public class MainRepository {
             }
         } catch (SQLException e) {
             LOGGER.log(Level.WARNING, e.toString());
-        }catch (NullPointerException n){
+        } catch (NullPointerException n) {
             LOGGER.log(Level.WARNING, "Database connection not initiated.");
+        } catch (ClassNotFoundException e) {
+            e.printStackTrace();
         }
         return projectSummaryModels;
     }
 
-    public boolean isManagerSSN(String ssn){
-        String query ="select ssn \n" +
+    public boolean isManagerSSN(String ssn) {
+        String query = "select ssn \n" +
                 "from  Employee\n" +
-                "where superssn = '"+ssn+"'";
+                "where superssn = '" + ssn + "'";
 
         try {
-            PreparedStatement p = conn.prepareStatement(query);
-            p.clearParameters();
-            ResultSet r = p.executeQuery();
+            ResultSet r = DBUtil.dbExecuteQuery(query);
             return r.next();
 
         } catch (SQLException e) {
             LOGGER.log(Level.WARNING, e.toString());
-        }catch (NullPointerException n){
+        } catch (NullPointerException n) {
             LOGGER.log(Level.WARNING, "Database connection not initiated.");
+        } catch (ClassNotFoundException e) {
+            e.printStackTrace();
         }
         return false;
     }
 
+    public void addEmployee(String fname, String minit, String lname, String ssn, String dob, String address,
+                            String sex, String salary, String superSSN, String dno, String email) throws SQLException, ClassNotFoundException {
+        //Declare a insert statement
+        String updateStmt =
+                "BEGIN\n" +
+                        "INSERT INTO employee\n" +
+                        "(fname, minit, lname, ssn, bdate, address, sex, salary, superssn, dno, email)\n" +
+                        "VALUES\n" +
+                        "('" + fname + "', '" + minit + "','" + lname + "','" + ssn + "', '" + dob + "','" + address + "'," +
+                        "'" + sex + "', '" + salary + "','" + superSSN + "','" + dno + "', '" + email + "');\n" +
+                        "END;";
 
+        //Execute insert operation
+        try {
+            DBUtil.dbExecuteUpdate(updateStmt);
+        } catch (SQLException | ClassNotFoundException e) {
+            System.out.print("Error occurred while DELETE Operation: " + e);
+            throw e;
+        }
+    }
+
+    public void assignProject(WorksOn w) throws SQLException, ClassNotFoundException {
+        //Declare a insert statement
+        String updateStmt =
+                "BEGIN\n" +
+                        "INSERT INTO works_on\n" +
+                        "(essn, pno, hours)\n" +
+                        "VALUES\n" +
+                        "('" + w.getEmployeeSSN() + "', '" + w.getProjectNumber() + "','" + w.getHours() + "');\n" +
+                        "END;";
+
+        //Execute insert operation
+        try {
+            DBUtil.dbExecuteUpdate(updateStmt);
+        } catch (SQLException | ClassNotFoundException e) {
+            System.out.print("Error occurred while DELETE Operation: " + e);
+            throw e;
+        }
+    }
+
+    public void addDependent(Dependent d) throws SQLException, ClassNotFoundException {
+        //Declare a insert statement
+        String updateStmt =
+                "BEGIN\n" +
+                        "INSERT INTO dependent\n" +
+                        "(essn, dependent_name, sex , bdate, relationship)\n" +
+                        "VALUES\n" +
+                        "('" + d.getEmployeeSSN() + "', '" + d.getDependentName() + "','" + d.getSex()
+                        + "','" + d.getbDate() + "','" + d.getRelationship() + "');\n" +
+                        "END;";
+
+        //Execute insert operation
+        try {
+            DBUtil.dbExecuteUpdate(updateStmt);
+        } catch (SQLException | ClassNotFoundException e) {
+            System.out.print("Error occurred while DELETE Operation: " + e);
+            throw e;
+        }
+    }
 
 }

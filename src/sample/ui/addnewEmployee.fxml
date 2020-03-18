@@ -4,90 +4,94 @@
 <?import javafx.scene.control.*?>
 <?import javafx.scene.layout.*?>
 <?import javafx.scene.text.Font?>
-<AnchorPane prefHeight="600.0" prefWidth="400.0" xmlns="http://javafx.com/javafx/10.0.2-internal" xmlns:fx="http://javafx.com/fxml/1" fx:controller="sample.controller.NewEmployeeController">
-   <children>
-      <Label text="Add New Employee" underline="true" AnchorPane.leftAnchor="16.0" AnchorPane.topAnchor="8.0">
-         <font>
-            <Font name="System Bold" size="21.0" />
-         </font>
-         <padding>
-            <Insets bottom="4.0" left="4.0" right="4.0" top="4.0" />
-         </padding></Label>
-      <GridPane hgap="16.0" vgap="16.0" AnchorPane.leftAnchor="16.0" AnchorPane.topAnchor="52.0">
-         <columnConstraints>
-            <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" />
-            <ColumnConstraints />
-         </columnConstraints>
-         <rowConstraints>
-            <RowConstraints minHeight="10.0" vgrow="SOMETIMES" />
-            <RowConstraints />
-            <RowConstraints />
-            <RowConstraints />
-            <RowConstraints />
-            <RowConstraints />
-            <RowConstraints />
-            <RowConstraints />
-            <RowConstraints />
-            <RowConstraints />
-            <RowConstraints />
-            <RowConstraints />
-         </rowConstraints>
-         <children>
-            <Label fx:id="firstNameLabel" text="First Name" GridPane.columnIndex="0" GridPane.rowIndex="0" />
-            <TextField fx:id="firstNameField" GridPane.columnIndex="1" GridPane.rowIndex="0" />
-         </children>
+<AnchorPane xmlns:fx="http://javafx.com/fxml/1" fx:id="root" prefHeight="600.0" prefWidth="400.0"
+            xmlns="http://javafx.com/javafx/10.0.2-internal" fx:controller="sample.controller.NewEmployeeController">
+    <children>
+        <Label text="Add New Employee" underline="true" AnchorPane.leftAnchor="16.0" AnchorPane.topAnchor="8.0">
+            <font>
+                <Font name="System Bold" size="21.0"/>
+            </font>
+            <padding>
+                <Insets bottom="4.0" left="4.0" right="4.0" top="4.0"/>
+            </padding>
+        </Label>
+        <GridPane hgap="16.0" vgap="16.0" AnchorPane.leftAnchor="16.0" AnchorPane.topAnchor="52.0">
+            <columnConstraints>
+                <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0"/>
+                <ColumnConstraints/>
+            </columnConstraints>
+            <rowConstraints>
+                <RowConstraints minHeight="10.0" vgrow="SOMETIMES"/>
+                <RowConstraints/>
+                <RowConstraints/>
+                <RowConstraints/>
+                <RowConstraints/>
+                <RowConstraints/>
+                <RowConstraints/>
+                <RowConstraints/>
+                <RowConstraints/>
+                <RowConstraints/>
+                <RowConstraints/>
+                <RowConstraints/>
+            </rowConstraints>
+            <children>
+                <Label fx:id="firstNameLabel" text="First Name" GridPane.columnIndex="0" GridPane.rowIndex="0"/>
+                <TextField fx:id="firstNameField" GridPane.columnIndex="1" GridPane.rowIndex="0"/>
+            </children>
 
-         <children>
-            <Label fx:id="middleNameLabel" text="Middle Name" GridPane.columnIndex="0" GridPane.rowIndex="1" />
-            <TextField fx:id="middleNameField" GridPane.columnIndex="1" GridPane.rowIndex="1" />
-         </children>
+            <children>
+                <Label fx:id="middleNameLabel" text="Middle Name" GridPane.columnIndex="0" GridPane.rowIndex="1"/>
+                <TextField fx:id="middleNameField" GridPane.columnIndex="1" GridPane.rowIndex="1"/>
+            </children>
 
-         <children>
-            <Label fx:id="lastNameLabel" text="Last Name" GridPane.columnIndex="0" GridPane.rowIndex="2" />
-            <TextField fx:id="lastNameField" GridPane.columnIndex="1" GridPane.rowIndex="2" />
-         </children>
+            <children>
+                <Label fx:id="lastNameLabel" text="Last Name" GridPane.columnIndex="0" GridPane.rowIndex="2"/>
+                <TextField fx:id="lastNameField" GridPane.columnIndex="1" GridPane.rowIndex="2"/>
+            </children>
 
-         <children>
-            <Label fx:id="ssnLabel" text="Social Security Number" GridPane.columnIndex="0" GridPane.rowIndex="3" />
-            <TextField fx:id="ssnField" GridPane.columnIndex="1" GridPane.rowIndex="3" />
-         </children>
+            <children>
+                <Label fx:id="ssnLabel" text="Social Security Number" GridPane.columnIndex="0" GridPane.rowIndex="3"/>
+                <TextField fx:id="ssnField" GridPane.columnIndex="1" GridPane.rowIndex="3"/>
+            </children>
 
-         <children>
-            <Label fx:id="bdateLabel" text="Date of Birth" GridPane.columnIndex="0" GridPane.rowIndex="4" />
-            <DatePicker fx:id="bdateField" GridPane.columnIndex="1" GridPane.rowIndex="4" />
-         </children>
+            <children>
+                <Label fx:id="bdateLabel" text="Date of Birth" GridPane.columnIndex="0" GridPane.rowIndex="4"/>
+                <DatePicker fx:id="bdateField" GridPane.columnIndex="1" GridPane.rowIndex="4"/>
+            </children>
 
-         <children>
-            <Label fx:id="addressLabel" text="Address" GridPane.columnIndex="0" GridPane.rowIndex="5" />
-            <TextField fx:id="addressField" GridPane.columnIndex="1" GridPane.rowIndex="5" />
-         </children>
+            <children>
+                <Label fx:id="addressLabel" text="Address" GridPane.columnIndex="0" GridPane.rowIndex="5"/>
+                <TextField fx:id="addressField" GridPane.columnIndex="1" GridPane.rowIndex="5"/>
+            </children>
 
-         <children>
-            <Label text="Sex" GridPane.columnIndex="0" GridPane.rowIndex="6" />
-            <ChoiceBox fx:id="sexChoiceBox" GridPane.columnIndex="1" GridPane.rowIndex="6" />
-         </children>
+            <children>
+                <Label text="Sex" GridPane.columnIndex="0" GridPane.rowIndex="6"/>
+                <ChoiceBox fx:id="sexChoiceBox" GridPane.columnIndex="1" GridPane.rowIndex="6"/>
+            </children>
 
-         <children>
-            <Label text="Salary" GridPane.columnIndex="0" GridPane.rowIndex="7" />
-            <TextField fx:id="salaryField" GridPane.columnIndex="1" GridPane.rowIndex="7" />
-         </children>
+            <children>
+                <Label text="Salary" GridPane.columnIndex="0" GridPane.rowIndex="7"/>
+                <TextField fx:id="salaryField" GridPane.columnIndex="1" GridPane.rowIndex="7"/>
+            </children>
 
-         <children>
-            <Label text="Supervisor Name" GridPane.columnIndex="0" GridPane.rowIndex="8" />
-            <ChoiceBox fx:id="supervisorNameChoiceBox" GridPane.columnIndex="1" GridPane.rowIndex="8" />
-         </children>
+            <children>
+                <Label text="Supervisor Name" GridPane.columnIndex="0" GridPane.rowIndex="8"/>
+                <ChoiceBox fx:id="supervisorNameChoiceBox" GridPane.columnIndex="1" GridPane.rowIndex="8"/>
+            </children>
 
-         <children>
-            <Label text="Department Number" GridPane.columnIndex="0" GridPane.rowIndex="9" />
-            <ChoiceBox fx:id="departNumberField" GridPane.columnIndex="1" GridPane.rowIndex="9" />
-         </children>
+            <children>
+                <Label text="Department Number" GridPane.columnIndex="0" GridPane.rowIndex="9"/>
+                <ChoiceBox fx:id="departNumberField" GridPane.columnIndex="1" GridPane.rowIndex="9"/>
+            </children>
 
-         <children>
-            <Label text="Email Address" GridPane.columnIndex="0" GridPane.rowIndex="10" />
-            <TextField fx:id="emailAddressField" GridPane.columnIndex="1" GridPane.rowIndex="10" />
-            <Button fx:id="goBackButton" mnemonicParsing="false" onAction="#onBackButtonClicked" text="Go Back" GridPane.columnIndex="0" GridPane.halignment="CENTER" GridPane.rowIndex="11" />
-            <Button fx:id="submitButton" mnemonicParsing="false" onAction="#onSubmitButtonClicked" text="Submit" GridPane.columnIndex="1" GridPane.halignment="CENTER" GridPane.rowIndex="11" />
-         </children>
-      </GridPane>
-   </children>
+            <children>
+                <Label text="Email Address" GridPane.columnIndex="0" GridPane.rowIndex="10"/>
+                <TextField fx:id="emailAddressField" GridPane.columnIndex="1" GridPane.rowIndex="10"/>
+                <Button fx:id="goBackButton" mnemonicParsing="false" onAction="#onBackButtonClicked" text="Go Back"
+                        GridPane.columnIndex="0" GridPane.halignment="CENTER" GridPane.rowIndex="11"/>
+                <Button fx:id="submitButton" mnemonicParsing="false" onAction="#onSubmitButtonClicked" text="Submit"
+                        GridPane.columnIndex="1" GridPane.halignment="CENTER" GridPane.rowIndex="11"/>
+            </children>
+        </GridPane>
+    </children>
 </AnchorPane>

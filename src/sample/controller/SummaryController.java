@@ -12,7 +12,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-public class SummaryController  {
+public class SummaryController {
 
     @FXML
     public Label employeeSummaryfield;
@@ -35,7 +35,7 @@ public class SummaryController  {
     public Label projectSummaryLabel;
 
     public AnchorPane rootSummary;
-
+    Map<Integer, String> employeeSummary = new HashMap<>();
     private Thread employeeThread;
     private Thread projectThread;
 
@@ -43,8 +43,6 @@ public class SummaryController  {
         connectionStatus.setVisible(!connectionAvailable);
         summaryTilePane.setVisible(connectionAvailable);
     }
-
-    Map<Integer, String> employeeSummary = new HashMap<>();
 
     public void initialize() {
         fetchEmployeeSummary();
@@ -64,7 +62,7 @@ public class SummaryController  {
                     Platform.runLater(new Runnable() {
                         @Override
                         public void run() {
-                            if(projectSummaryModelList != null && !projectSummaryModelList.isEmpty()) {
+                            if (projectSummaryModelList != null && !projectSummaryModelList.isEmpty()) {
                                 projectSummaryfield.setText(projectSummaryModelList.get(finalCount % projectSummaryModelList.size()).getTotalHoursInProject());
                                 projectSummaryLabel.setText(projectSummaryModelList.get(finalCount % projectSummaryModelList.size()).getProjectName());
                                 departmentSummaryfield.setText(projectSummaryModelList.get(finalCount % projectSummaryModelList.size()).getEmployeesInProject());
@@ -117,7 +115,7 @@ public class SummaryController  {
                 }
             }
         };
-         employeeThread = new Thread(runnable);
+        employeeThread = new Thread(runnable);
         employeeThread.start();
     }
 

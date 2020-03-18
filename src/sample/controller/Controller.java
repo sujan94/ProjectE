@@ -38,7 +38,9 @@ public class Controller {
     public AnchorPane summaryChildBody;
 
     @FXML
-    public GridPane rootlayout;
+    public GridPane root;
+
+    public Label title;
 
     @FXML
     private ChoiceBox<String> projectChoiceBox;
@@ -48,9 +50,6 @@ public class Controller {
 
     @FXML
     private Button searchButton;
-
-    @FXML
-    private Label label;
 
     @FXML
     private ChoiceBox<String> departmentChoiceBox;
@@ -164,10 +163,6 @@ public class Controller {
         listItem.add("Project");
         list.setItems(listItem);
         System.out.println(list);
-    }
-
-    public void setLabel() {
-        label.setText("Hello");
     }
 
     public void onSearchButtonClicked() {
@@ -291,7 +286,7 @@ public class Controller {
             Optional<ButtonType> buttonResult = alert.showAndWait();
             if (buttonResult.get() == ButtonType.OK) {
                 // ... start new scene
-                Stage stage = (Stage) rootlayout.getScene().getWindow();
+                Stage stage = (Stage) root.getScene().getWindow();
                 try {
                     new NewEmployee().start(stage);
                 } catch (Exception e) {
