@@ -84,8 +84,9 @@
                                         <ChoiceBox fx:id="locationChoiceBox" prefHeight="27.0" prefWidth="147.0"
                                                    GridPane.columnIndex="1" GridPane.rowIndex="3"/>
                                         <Button fx:id="searchButton" mnemonicParsing="false"
-                                                onAction="#onSearchButtonClicked" text="Search" GridPane.columnIndex="1"
-                                                GridPane.rowIndex="4"/>
+                                                onAction="#onSearchButtonClicked" pickOnBounds="false" text="Search"
+                                                GridPane.columnIndex="1" GridPane.halignment="CENTER"
+                                                GridPane.hgrow="ALWAYS" GridPane.rowIndex="4"/>
                                     </children>
                                 </GridPane>
 

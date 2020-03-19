@@ -65,13 +65,13 @@ public class MainRepository {
         return projects;
     }
 
-    public List<String> getAllProjectsInDepartment(String departmentNumber) {
-        List<String> projects = new ArrayList<>();
+    public List<Project> getAllProjectsInDepartment(String departmentNumber) {
+        List<Project> projects = new ArrayList<>();
         try {
-            String allProjects = "SELECT Pnumber from PROJECT where dnum='" + departmentNumber + "'";
+            String allProjects = "SELECT * from PROJECT where dnum='" + departmentNumber + "'";
             ResultSet r = DatabaseUtils.dbExecuteQuery(allProjects);
             while (r.next()) {
-                projects.add(r.getString(1));
+                projects.add(new Project(r.getString(1), r.getString(2), r.getString(3), r.getString(4)));
             }
         } catch (SQLException e) {
             LOGGER.log(Level.WARNING, e.toString());

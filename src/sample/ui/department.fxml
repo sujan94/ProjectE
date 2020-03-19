@@ -17,7 +17,8 @@
         <TableView fx:id="departmentTable" GridPane.columnIndex="0" GridPane.hgrow="ALWAYS" GridPane.rowIndex="1">
         </TableView>
 
-        <Button fx:id="addDepartment" mnemonicParsing="false" text="Button" GridPane.columnIndex="0"
+        <Button fx:id="addDepartment" mnemonicParsing="false" text="Add Department" onAction="#onAddDepartmentClicked"
+                GridPane.columnIndex="0"
                 GridPane.rowIndex="2"/>
     </children>
     <columnConstraints>

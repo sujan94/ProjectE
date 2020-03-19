@@ -28,4 +28,13 @@ public class Project {
     public String getDnumber() {
         return dnumber;
     }
+
+    @Override
+    public String toString() {
+        return "Project: \n\n" +
+                "Project Name =" + pname + '\n' +
+                "Project Number =" + pnumber + '\n' +
+                "Project Location =" + plocation + '\n' +
+                "Department Number =" + dnumber + '\n';
+    }
 }

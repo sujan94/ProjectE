@@ -71,7 +71,7 @@ public class Employee {
 
     @Override
     public String toString() {
-        return "Employee:\n" +
+        return "Employee:\n\n" +
                 "Name = " + getFullName() + '\n' +
                 "SSN = " + ssn + '\n' +
                 "Date of Birth= " + bdate + '\n' +

@@ -4,6 +4,8 @@ import io.reactivex.rxjava3.core.Observable;
 import io.reactivex.rxjava3.schedulers.Schedulers;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
+import javafx.event.ActionEvent;
+import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
@@ -62,4 +64,12 @@ public class DepartmentController {
         departmentTable.getColumns().addAll(departNameCol, departNumCol, mgrSSNCol, mgrStartDate);
     }
 
+    public void onAddDepartmentClicked(ActionEvent actionEvent) {
+        Alert infoAlert = new Alert(Alert.AlertType.INFORMATION);
+        infoAlert.setTitle("Add Project");
+        infoAlert.setHeaderText(null);
+        infoAlert.setContentText("Feature is in development.");
+
+        infoAlert.showAndWait();
+    }
 }

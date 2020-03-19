@@ -10,16 +10,16 @@ import javafx.scene.control.ButtonType;
 import javafx.stage.Stage;
 import javafx.stage.WindowEvent;
 import sample.controller.AssignProjectController;
-import sample.model.Employee;
+import sample.model.Report;
 
 import java.util.Optional;
 
 public class AssignProject {
 
-    private Employee e;
+    private Report report;
 
-    public AssignProject(Employee e) {
-        this.e = e;
+    public AssignProject(Report report) {
+        this.report = report;
     }
 
     public AssignProject() {
@@ -51,7 +51,7 @@ public class AssignProject {
         primaryStage.setScene(scene);
         primaryStage.show();
         AssignProjectController controller = fxmlLoader.getController();
-        controller.setEmployee(e);
+        controller.setReport(report);
         controller.setPrevStage(primaryStage);
     }
 }

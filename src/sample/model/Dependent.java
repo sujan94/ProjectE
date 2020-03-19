@@ -35,4 +35,14 @@ public class Dependent {
     public String getRelationship() {
         return relationship;
     }
+
+    @Override
+    public String toString() {
+        return "Dependent: \n\n" +
+                "Employee's SSN =" + employeeSSN + '\n' +
+                "Dependent Number =" + dependentName + '\n' +
+                "Sex =" + sex + '\n' +
+                "Date of Birth =" + bDate + '\n' +
+                "Relationship =" + relationship + '\n';
+    }
 }

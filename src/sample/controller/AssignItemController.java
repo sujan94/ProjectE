@@ -1,10 +1,12 @@
 package sample.controller;
 
 import javafx.collections.FXCollections;
+import javafx.collections.ObservableList;
 import javafx.scene.control.Button;
 import javafx.scene.control.ChoiceBox;
 import javafx.scene.control.TextField;
 import sample.model.Employee;
+import sample.model.Project;
 import sample.utils.ChoiceBoxUtils;
 import sample.utils.TextFieldUtils;
 
@@ -33,8 +35,12 @@ public class AssignItemController {
         }
     }
 
-    public void setProjectNumList(List<String> list) {
-        projectNumberCBox.setItems(FXCollections.observableArrayList(list));
+    public void setProjectNumList(List<Project> list) {
+        ObservableList<String> projectList = FXCollections.observableArrayList();
+        for (Project p : list) {
+            projectList.add(p.getPnumber());
+        }
+        projectNumberCBox.setItems(projectList);
     }
 
     public void onAssignMoreClicked() {

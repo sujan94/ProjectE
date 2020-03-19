@@ -9,6 +9,7 @@ import javafx.stage.Stage;
 import javafx.util.StringConverter;
 import sample.model.Dependent;
 import sample.model.Employee;
+import sample.model.Report;
 import sample.repository.MainRepository;
 import sample.utils.ChoiceBoxUtils;
 import sample.utils.DateUtils;
@@ -31,7 +32,7 @@ public class AddDependentController {
     public DatePicker dependentDOB;
     public TextField employeeSSN;
     private Stage prevStage;
-    private Employee e;
+    private Report report;
 
     public void initialize() {
         dependentSex.setItems(FXCollections.observableArrayList("M", "F"));
@@ -59,9 +60,10 @@ public class AddDependentController {
         });
     }
 
-    public void setEmployee(Employee e) {
-        this.e = e;
-        if (e != null) {
+    public void setReport(Report report) {
+        this.report = report;
+        if (report != null && report.getEmployee() != null) {
+            Employee e = report.getEmployee();
             employeeSSN.setText(e.getSsn());
             employeeNameCBox.setDisable(true);
             employeeNameCBox.setValue(e.getFname());
@@ -84,16 +86,11 @@ public class AddDependentController {
             } else {
                 String formattedDateString = DateUtils.getFormattedDOB(dependentDOB.getEditor().getText());
                 try {
-                    MainRepository.getInstance().addDependent(new Dependent(e.getSsn(), dependentName.getText(),
-                            dependentSex.getValue(), formattedDateString, relationship.getText()));
-                    Alert alert = new Alert(Alert.AlertType.INFORMATION);
-                    alert.setTitle("Submission successful!");
-                    alert.setHeaderText(null);
-                    alert.setContentText("Dependent added and linked to the employee");
-                    Optional<ButtonType> buttonResult = alert.showAndWait();
-                    if (buttonResult.get() == ButtonType.OK) {
-                        onCancelButtonClicked();
-                    }
+                    Dependent dependent = new Dependent(report.getEmployee().getSsn(), dependentName.getText(),
+                            dependentSex.getValue(), formattedDateString, relationship.getText());
+                    MainRepository.getInstance().addDependent(dependent);
+                    report.setDependent(dependent);
+                    onCancelButtonClicked();
                 } catch (SQLException ex) {
                     ex.printStackTrace();
                     Alert alert = new Alert(Alert.AlertType.ERROR);
@@ -113,16 +110,23 @@ public class AddDependentController {
     }
 
     public void onCancelButtonClicked() {
-        FXMLLoader loader = new FXMLLoader(getClass().getResource("../ui/sample.fxml"));
-        Stage stage = new Stage();
-        stage.initOwner(root.getScene().getWindow());
-        try {
-            stage.setScene(new Scene(loader.load()));
-            prevStage.close();
-            // showAndWait will block execution until the window closes...
-            stage.showAndWait();
-        } catch (IOException e) {
-            e.printStackTrace();
+        Alert alert = new Alert(Alert.AlertType.INFORMATION);
+        alert.setTitle("Submission successful!");
+        alert.setHeaderText(null);
+        alert.setContentText(report.toString());
+        Optional<ButtonType> buttonResult = alert.showAndWait();
+        if (buttonResult.isPresent() && buttonResult.get() == ButtonType.OK) {
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("../ui/sample.fxml"));
+            Stage stage = new Stage();
+            stage.initOwner(root.getScene().getWindow());
+            try {
+                stage.setScene(new Scene(loader.load()));
+                prevStage.close();
+                // showAndWait will block execution until the window closes...
+                stage.showAndWait();
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
         }
     }
 }

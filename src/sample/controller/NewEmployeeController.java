@@ -11,6 +11,7 @@ import javafx.stage.Stage;
 import javafx.util.StringConverter;
 import sample.model.Department;
 import sample.model.Employee;
+import sample.model.Report;
 import sample.repository.MainRepository;
 import sample.scenes.AssignProject;
 import sample.utils.ChoiceBoxUtils;
@@ -142,6 +143,12 @@ public class NewEmployeeController {
             String birthDate = getFormattedDOB(bdateField.getEditor().getText());
             if (departmentNum != null && supervisorSSN != null) {
                 try {
+                    Employee employee = new Employee(firstNameField.getText(),
+                            middleNameField.getText(), lastNameField.getText(),
+                            ssnField.getText(), birthDate, addressField.getText(),
+                            sexChoiceBox.getValue(), salaryField.getText(), supervisorSSN,
+                            departmentNum);
+
                     MainRepository.getInstance().addEmployee(firstNameField.getText(),
                             middleNameField.getText(), lastNameField.getText(),
                             ssnField.getText(), birthDate, addressField.getText(),
@@ -156,14 +163,11 @@ public class NewEmployeeController {
                     Optional<ButtonType> buttonResult = alert.showAndWait();
                     if (buttonResult.get() == ButtonType.OK) {
                         // ... start new scene
-                        Employee employee = new Employee(firstNameField.getText(),
-                                middleNameField.getText(), lastNameField.getText(),
-                                ssnField.getText(), birthDate, addressField.getText(),
-                                sexChoiceBox.getValue(), salaryField.getText(), supervisorSSN,
-                                departmentNum);
+
+                        Report report = new Report(employee);
                         Stage stage = (Stage) root.getScene().getWindow();
                         try {
-                            new AssignProject(employee).start(stage);
+                            new AssignProject(report).start(stage);
                         } catch (Exception e) {
                             e.printStackTrace();
                         }

@@ -8,16 +8,16 @@ import javafx.scene.control.Alert;
 import javafx.scene.control.ButtonType;
 import javafx.stage.Stage;
 import sample.controller.AddDependentController;
-import sample.model.Employee;
+import sample.model.Report;
 
 import java.util.Optional;
 
 public class AddDependentScene {
 
-    private Employee employee;
+    private Report report;
 
-    public AddDependentScene(Employee employee) {
-        this.employee = employee;
+    public AddDependentScene(Report report) {
+        this.report = report;
     }
 
     public AddDependentScene() {
@@ -46,7 +46,7 @@ public class AddDependentScene {
         primaryStage.setScene(scene);
         primaryStage.show();
         AddDependentController controller = fxmlLoader.getController();
-        controller.setEmployee(employee);
+        controller.setReport(report);
         controller.setPrevStage(primaryStage);
     }
 }
