@@ -32,7 +32,7 @@ public class DatabaseUtils {
             try {
                 // TODO define connection string and credential here
                 String connectionString = "@connectionString";
-                conn = DriverManager.getConnection(connectionString, "@username", "@password");
+                connection = DriverManager.getConnection(connectionString, "@username", "@password");
             } catch (SQLException e) {
                 LOGGER.log(Level.WARNING, "Connection Failed! Check output console" + e);
                 e.printStackTrace();
