@@ -47,11 +47,11 @@
                         </ListView>
                     </children>
                 </AnchorPane>
-                <AnchorPane fx:id="rightBodyAnchor" minHeight="0.0" minWidth="0.0">
+                <AnchorPane fx:id="rightBodyAnchor" minHeight="0.0" minWidth="0.0" prefHeight="235.0">
                     <children>
 
 
-                        <AnchorPane fx:id="summaryChildBody" AnchorPane.leftAnchor="0.0">
+                        <AnchorPane fx:id="summaryChildBody" prefHeight="200.0" AnchorPane.leftAnchor="0.0">
                             <children>
 
                                 <GridPane hgap="8.0" vgap="8.0" AnchorPane.leftAnchor="8.0" AnchorPane.topAnchor="8.0">
