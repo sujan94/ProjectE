@@ -104,7 +104,7 @@ public class NewEmployeeController {
         supervisorList.add("None");
         supervisorNameChoiceBox.setValue("None");
         for (Employee e : supervisors) {
-            supervisorList.add(e.getFname());
+            supervisorList.add(e.getFullName());
         }
         supervisorNameChoiceBox.setItems(supervisorList);
 

@@ -1,6 +1,5 @@
 package sample.scenes;
 
-import javafx.application.Application;
 import javafx.application.Platform;
 import javafx.event.EventHandler;
 import javafx.fxml.FXMLLoader;
@@ -14,7 +13,7 @@ import sample.controller.NewEmployeeController;
 
 import java.util.Optional;
 
-public class NewEmployee extends Application {
+public class NewEmployee {
 
     public void start(Stage primaryStage) throws Exception {
         FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("../ui/addnewEmployee.fxml"));

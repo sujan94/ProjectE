@@ -1,6 +1,5 @@
 package sample.scenes;
 
-import javafx.application.Application;
 import javafx.application.Platform;
 import javafx.event.EventHandler;
 import javafx.fxml.FXMLLoader;
@@ -15,7 +14,7 @@ import sample.model.Employee;
 
 import java.util.Optional;
 
-public class AssignProject extends Application {
+public class AssignProject {
 
     private Employee e;
 
@@ -26,7 +25,6 @@ public class AssignProject extends Application {
     public AssignProject() {
     }
 
-    @Override
     public void start(Stage primaryStage) throws Exception {
         FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("../ui/assign_project.fxml"));
         Parent root = fxmlLoader.load();

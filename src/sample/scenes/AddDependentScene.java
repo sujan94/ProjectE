@@ -1,6 +1,5 @@
 package sample.scenes;
 
-import javafx.application.Application;
 import javafx.application.Platform;
 import javafx.event.EventHandler;
 import javafx.fxml.FXMLLoader;
@@ -15,7 +14,7 @@ import sample.model.Employee;
 
 import java.util.Optional;
 
-public class AddDependentScene extends Application {
+public class AddDependentScene {
 
     private Employee employee;
 
@@ -26,7 +25,6 @@ public class AddDependentScene extends Application {
     public AddDependentScene() {
     }
 
-    @Override
     public void start(Stage primaryStage) throws Exception {
         FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("../ui/add_dependent.fxml"));
         Parent root = fxmlLoader.load();

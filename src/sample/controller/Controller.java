@@ -81,6 +81,7 @@ public class Controller extends BaseController {
     private Parent department;
     private Parent project;
     private Parent summary;
+    private Parent graph;
     private Employee selectedEmployee;
 
     public void initialize() {
@@ -101,11 +102,10 @@ public class Controller extends BaseController {
             LoadingController loadingController = fxmlLoader.getController();
             root.getChildren().add(loading);
             GridPane.setConstraints(loading, 0, 1);
-            Observable.interval(0, (long) 1.7, TimeUnit.SECONDS)
+            Observable.interval(0, 2, TimeUnit.SECONDS)
                     .take(5)
                     .subscribe(aLong -> {
-                        System.out.println(aLong + "////");
-                        float progressValue = (float) (0.3 * aLong);
+                        float progressValue = (float) (0.35 * aLong);
                         Platform.runLater(() -> {
                             loadingController.setProgress(progressValue);
                             if (progressValue > 1.0f) {
@@ -236,6 +236,7 @@ public class Controller extends BaseController {
 
     private void initializeLeftNav() {
         listItem.add("Summary");
+        listItem.add("Graph");
         listItem.add("Employee");
         listItem.add("Department");
         listItem.add("Project");
@@ -303,6 +304,7 @@ public class Controller extends BaseController {
                 rightBodyAnchor.getChildren().remove(project);
                 rightBodyAnchor.getChildren().remove(department);
                 rightBodyAnchor.getChildren().remove(summary);
+                rightBodyAnchor.getChildren().remove(graph);
                 System.out.println(isSummaryRoot + "11111");
                 try {
                     summary = FXMLLoader.load(getClass().getResource("../ui/summary.fxml"));
@@ -313,19 +315,36 @@ public class Controller extends BaseController {
                 rightBodyAnchor.getChildren().add(summary);
                 break;
             case 1:
+                rightBodyAnchor.getChildren().remove(project);
+                rightBodyAnchor.getChildren().remove(department);
+                rightBodyAnchor.getChildren().remove(summary);
+                rightBodyAnchor.getChildren().remove(graph);
+                isSummaryRoot = false;
+                System.out.println(isSummaryRoot + "#######");
+                try {
+                    graph = FXMLLoader.load(getClass().getResource("../ui/graph.fxml"));
+                    summaryChildBody.setVisible(false);
+                    rightBodyAnchor.getChildren().add(graph);
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
+                break;
+            case 2:
                 summaryChildBody.setVisible(true);
                 rightBodyAnchor.getChildren().remove(project);
                 rightBodyAnchor.getChildren().remove(department);
                 rightBodyAnchor.getChildren().remove(summary);
+                rightBodyAnchor.getChildren().remove(graph);
                 isSummaryRoot = false;
                 System.out.println(isSummaryRoot + "#######");
 
                 break;
-            case 2:
+            case 3:
                 try {
                     rightBodyAnchor.getChildren().remove(project);
                     rightBodyAnchor.getChildren().remove(department);
                     rightBodyAnchor.getChildren().remove(summary);
+                    rightBodyAnchor.getChildren().remove(graph);
                     isSummaryRoot = false;
                     System.out.println(isSummaryRoot + "#######");
                     department = FXMLLoader.load(getClass().getResource("../ui/department.fxml"));
@@ -335,11 +354,12 @@ public class Controller extends BaseController {
                     e.printStackTrace();
                 }
                 break;
-            case 3:
+            case 4:
                 try {
                     rightBodyAnchor.getChildren().remove(department);
                     rightBodyAnchor.getChildren().remove(project);
                     rightBodyAnchor.getChildren().remove(summary);
+                    rightBodyAnchor.getChildren().remove(graph);
                     isSummaryRoot = false;
                     project = FXMLLoader.load(getClass().getResource("../ui/project.fxml"));
                     summaryChildBody.setVisible(false);
