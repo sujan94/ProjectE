@@ -1,18 +1,17 @@
 package sample.scenes;
 
-import javafx.application.Application;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.stage.Stage;
 
-public class Graph extends Application {
-    @Override
+public class Graph {
+
     public void start(Stage primaryStage) throws Exception {
         FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("../ui/graph.fxml"));
         Parent root = fxmlLoader.load();
-        primaryStage.setTitle("Hello World");
-        Scene scene = new Scene(root, 900, 575);
+        primaryStage.setTitle(ApplicationConstant.APPLICATION_TITLE);
+        Scene scene = new Scene(root, ApplicationConstant.SCREEN_WIDTH, ApplicationConstant.SCREEN_HEIGHT);
         primaryStage.setScene(scene);
         primaryStage.show();
     }

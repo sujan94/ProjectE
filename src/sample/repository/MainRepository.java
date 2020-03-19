@@ -1,7 +1,7 @@
 package sample.repository;
 
 import sample.model.*;
-import sample.utils.DBUtil;
+import sample.utils.DatabaseUtils;
 
 import java.sql.ResultSet;
 import java.sql.SQLException;
@@ -17,7 +17,7 @@ public class MainRepository {
     private static MainRepository instance;
 
     private MainRepository() {
-        DBUtil.startDriverCheck();
+        DatabaseUtils.startDriverCheck();
     }
 
     public static MainRepository getInstance() {
@@ -31,7 +31,7 @@ public class MainRepository {
         List<Department> departments = new ArrayList<>();
         try {
             String allDepartmentQuery = "SELECT * from DEPARTMENT";
-            ResultSet r = DBUtil.dbExecuteQuery(allDepartmentQuery);
+            ResultSet r = DatabaseUtils.dbExecuteQuery(allDepartmentQuery);
             while (r.next()) {
                 departments.add(new Department(r.getString(1), r.getString(2), r.getString(3), r.getString(4)));
             }
@@ -51,7 +51,7 @@ public class MainRepository {
         List<Project> projects = new ArrayList<>();
         try {
             String allProjects = "SELECT * from PROJECT";
-            ResultSet r = DBUtil.dbExecuteQuery(allProjects);
+            ResultSet r = DatabaseUtils.dbExecuteQuery(allProjects);
             while (r.next()) {
                 projects.add(new Project(r.getString(1), r.getString(2), r.getString(3), r.getString(4)));
             }
@@ -69,7 +69,7 @@ public class MainRepository {
         List<String> projects = new ArrayList<>();
         try {
             String allProjects = "SELECT Pnumber from PROJECT where dnum='" + departmentNumber + "'";
-            ResultSet r = DBUtil.dbExecuteQuery(allProjects);
+            ResultSet r = DatabaseUtils.dbExecuteQuery(allProjects);
             while (r.next()) {
                 projects.add(r.getString(1));
             }
@@ -87,7 +87,7 @@ public class MainRepository {
         List<String> locations = new ArrayList<>();
         try {
             String allLocations = "SELECT Dlocation from DEPT_LOCATIONS";
-            ResultSet r = DBUtil.dbExecuteQuery(allLocations);
+            ResultSet r = DatabaseUtils.dbExecuteQuery(allLocations);
             while (r.next()) {
                 locations.add(r.getString(1));
             }
@@ -104,7 +104,7 @@ public class MainRepository {
     public List<Employee> getAllEmployees(String query) {
         List<Employee> employees = new ArrayList<>();
         try {
-            ResultSet r = DBUtil.dbExecuteQuery(query);
+            ResultSet r = DatabaseUtils.dbExecuteQuery(query);
             while (r.next()) {
                 employees.add(new Employee(r.getString(1),
                         r.getString(2),
@@ -133,7 +133,7 @@ public class MainRepository {
                 "where emp.superssn=e.ssn";
         List<Employee> employees = new ArrayList<>();
         try {
-            ResultSet r = DBUtil.dbExecuteQuery(query);
+            ResultSet r = DatabaseUtils.dbExecuteQuery(query);
             while (r.next()) {
                 employees.add(new Employee(r.getString(1),
                         r.getString(2),
@@ -168,7 +168,7 @@ public class MainRepository {
             return null;
         }
         try {
-            ResultSet r = DBUtil.dbExecuteQuery(query);
+            ResultSet r = DatabaseUtils.dbExecuteQuery(query);
             while (r.next()) {
                 return r.getString(1);
             }
@@ -190,7 +190,7 @@ public class MainRepository {
                 "group by Pno, Pname";
 
         try {
-            ResultSet r = DBUtil.dbExecuteQuery(query);
+            ResultSet r = DatabaseUtils.dbExecuteQuery(query);
             while (r.next()) {
                 projectSummaryModels.add(new ProjectSummaryModel(r.getString(1),
                         r.getString(2),
@@ -213,7 +213,7 @@ public class MainRepository {
                 "where superssn = '" + ssn + "'";
 
         try {
-            ResultSet r = DBUtil.dbExecuteQuery(query);
+            ResultSet r = DatabaseUtils.dbExecuteQuery(query);
             return r.next();
 
         } catch (SQLException e) {
@@ -227,7 +227,7 @@ public class MainRepository {
     }
 
     public void addEmployee(String fname, String minit, String lname, String ssn, String dob, String address,
-                            String sex, String salary, String superSSN, String dno, String email) throws SQLException, ClassNotFoundException {
+                            String sex, String salary, String superSSN, String dno, String email) throws SQLException {
         //Declare a insert statement
         String updateStmt =
                 "BEGIN\n" +
@@ -240,14 +240,14 @@ public class MainRepository {
 
         //Execute insert operation
         try {
-            DBUtil.dbExecuteUpdate(updateStmt);
-        } catch (SQLException | ClassNotFoundException e) {
+            DatabaseUtils.dbExecuteUpdate(updateStmt);
+        } catch (SQLException e) {
             System.out.print("Error occurred while DELETE Operation: " + e);
             throw e;
         }
     }
 
-    public void assignProject(WorksOn w) throws SQLException, ClassNotFoundException {
+    public void assignProject(WorksOn w) throws SQLException {
         //Declare a insert statement
         String updateStmt =
                 "BEGIN\n" +
@@ -259,14 +259,14 @@ public class MainRepository {
 
         //Execute insert operation
         try {
-            DBUtil.dbExecuteUpdate(updateStmt);
-        } catch (SQLException | ClassNotFoundException e) {
+            DatabaseUtils.dbExecuteUpdate(updateStmt);
+        } catch (SQLException e) {
             System.out.print("Error occurred while DELETE Operation: " + e);
             throw e;
         }
     }
 
-    public void addDependent(Dependent d) throws SQLException, ClassNotFoundException {
+    public void addDependent(Dependent d) throws SQLException {
         //Declare a insert statement
         String updateStmt =
                 "BEGIN\n" +
@@ -279,34 +279,34 @@ public class MainRepository {
 
         //Execute insert operation
         try {
-            DBUtil.dbExecuteUpdate(updateStmt);
-        } catch (SQLException | ClassNotFoundException e) {
+            DatabaseUtils.dbExecuteUpdate(updateStmt);
+        } catch (SQLException e) {
             System.out.print("Error occurred while DELETE Operation: " + e);
             throw e;
         }
     }
 
-    public void deleteEmployee(Employee employee) throws SQLException, ClassNotFoundException {
+    public void deleteEmployee(Employee employee) throws SQLException {
         //Declare a insert statement
         String deleteSmt = "DELETE FROM EMPLOYEE where ssn='" + employee.getSsn() + "'";
 
         //Execute insert operation
         try {
-            DBUtil.dbExecuteUpdate(deleteSmt);
-        } catch (SQLException | ClassNotFoundException e) {
+            DatabaseUtils.dbExecuteUpdate(deleteSmt);
+        } catch (SQLException e) {
             System.out.print("Error occurred while DELETE Operation: " + e);
             throw e;
         }
     }
 
-    public void deleteProject(Project project) throws SQLException, ClassNotFoundException {
+    public void deleteProject(Project project) throws SQLException {
         //Declare a insert statement
         String deleteSmt = "DELETE FROM Project where Pnumber='" + project.getPnumber() + "'";
 
         //Execute insert operation
         try {
-            DBUtil.dbExecuteUpdate(deleteSmt);
-        } catch (SQLException | ClassNotFoundException e) {
+            DatabaseUtils.dbExecuteUpdate(deleteSmt);
+        } catch (SQLException e) {
             System.out.print("Error occurred while DELETE Operation: " + e);
             throw e;
         }

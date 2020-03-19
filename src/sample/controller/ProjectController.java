@@ -113,7 +113,7 @@ public class ProjectController {
 
                 requestProjects();
 
-            } catch (SQLException | ClassNotFoundException e) {
+            } catch (SQLException e) {
                 e.printStackTrace();
                 Alert errorAlert = new Alert(Alert.AlertType.ERROR);
                 errorAlert.setTitle("Delete Action");

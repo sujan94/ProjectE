@@ -93,7 +93,7 @@ public class AssignProjectController implements AssignItemController.AssignMoreC
                 try {
                     MainRepository.getInstance().assignProject(w);
                     startAddDependentController();
-                } catch (SQLException | ClassNotFoundException ex) {
+                } catch (SQLException ex) {
                     Alert alert = new Alert(Alert.AlertType.ERROR);
                     alert.setTitle("Operation Failed");
                     alert.setHeaderText(null);

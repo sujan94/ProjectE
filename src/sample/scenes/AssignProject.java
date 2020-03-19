@@ -28,7 +28,8 @@ public class AssignProject {
     public void start(Stage primaryStage) throws Exception {
         FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("../ui/assign_project.fxml"));
         Parent root = fxmlLoader.load();
-        primaryStage.setTitle("Hello World");
+        primaryStage.setTitle(ApplicationConstant.APPLICATION_TITLE);
+        Scene scene = new Scene(root, ApplicationConstant.SCREEN_WIDTH, ApplicationConstant.SCREEN_HEIGHT);
         primaryStage.setOnCloseRequest(new EventHandler<WindowEvent>() {
             @Override
             public void handle(WindowEvent event) {
@@ -45,7 +46,6 @@ public class AssignProject {
                 }
             }
         });
-        Scene scene = new Scene(root, 900, 575);
         scene.getStylesheets().add(getClass().getResource("../css/TextField.css").toExternalForm());
         scene.getStylesheets().add(getClass().getResource("../css/ChoiceBox.css").toExternalForm());
         primaryStage.setScene(scene);

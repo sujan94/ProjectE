@@ -22,6 +22,7 @@ import sample.model.Employee;
 import sample.model.Project;
 import sample.repository.MainRepository;
 import sample.scenes.NewEmployee;
+import sample.utils.DatabaseUtils;
 import sample.utils.TextFieldUtils;
 
 import java.io.IOException;
@@ -109,8 +110,10 @@ public class Controller extends BaseController {
                         Platform.runLater(() -> {
                             loadingController.setProgress(progressValue);
                             if (progressValue > 1.0f) {
-                                root.getChildren().remove(loading);
-                                splitPane.setVisible(true);
+                                if (DatabaseUtils.isIsDriverAvailable()) {
+                                    root.getChildren().remove(loading);
+                                    splitPane.setVisible(true);
+                                }
 
                             }
                         });
@@ -430,7 +433,7 @@ public class Controller extends BaseController {
                 deleteEmployeeButton.setVisible(false);
                 onSearchButtonClicked();
 
-            } catch (SQLException | ClassNotFoundException e) {
+            } catch (SQLException e) {
                 e.printStackTrace();
                 Alert errorAlert = new Alert(Alert.AlertType.ERROR);
                 errorAlert.setTitle("Delete Action");

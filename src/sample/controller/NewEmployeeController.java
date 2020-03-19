@@ -169,7 +169,7 @@ public class NewEmployeeController {
                         }
                     }
 
-                } catch (SQLException | ClassNotFoundException e) {
+                } catch (SQLException e) {
                     e.printStackTrace();
                     Alert alert = new Alert(Alert.AlertType.ERROR);
                     alert.setTitle("Error!");

@@ -2,3 +2,7 @@
   -fx-text-box-border: red ;
   -fx-focus-color: red ;
 }
+
+.label.error{
+-fx-text-fill: #333333;
+}

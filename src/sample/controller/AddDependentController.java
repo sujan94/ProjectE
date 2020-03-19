@@ -94,7 +94,7 @@ public class AddDependentController {
                     if (buttonResult.get() == ButtonType.OK) {
                         onCancelButtonClicked();
                     }
-                } catch (SQLException | ClassNotFoundException ex) {
+                } catch (SQLException ex) {
                     ex.printStackTrace();
                     Alert alert = new Alert(Alert.AlertType.ERROR);
                     alert.setTitle("Error Occured!");
