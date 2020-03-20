@@ -13,6 +13,7 @@ import sample.model.Report;
 import sample.repository.MainRepository;
 import sample.utils.ChoiceBoxUtils;
 import sample.utils.DateUtils;
+import sample.utils.PdfReportGenerator;
 import sample.utils.TextFieldUtils;
 
 import java.io.IOException;
@@ -36,6 +37,7 @@ public class AddDependentController {
 
     public void initialize() {
         dependentSex.setItems(FXCollections.observableArrayList("M", "F"));
+        addTextFieldConstraint();
         dependentDOB.setConverter(new StringConverter<LocalDate>() {
             String pattern = "dd-MM-yy";
             DateTimeFormatter dateFormatter = DateTimeFormatter.ofPattern(pattern);
@@ -58,6 +60,11 @@ public class AddDependentController {
                 }
             }
         });
+    }
+
+    private void addTextFieldConstraint() {
+        TextFieldUtils.setMaximumLength(dependentName, 15);
+        TextFieldUtils.setMaximumLength(relationship, 8);
     }
 
     public void setReport(Report report) {
@@ -114,6 +121,7 @@ public class AddDependentController {
         alert.setTitle("Submission successful!");
         alert.setHeaderText(null);
         alert.setContentText(report.toString());
+        PdfReportGenerator.generatePDF(report);
         Optional<ButtonType> buttonResult = alert.showAndWait();
         if (buttonResult.isPresent() && buttonResult.get() == ButtonType.OK) {
             FXMLLoader loader = new FXMLLoader(getClass().getResource("../ui/sample.fxml"));

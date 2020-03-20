@@ -88,6 +88,13 @@ public class NewEmployeeController {
     private void addTextFieldConstraint() {
         TextFieldUtils.setSSNConstraint(ssnField);
         TextFieldUtils.setInputNumberConstraint(salaryField);
+        TextFieldUtils.setMaximumLength(middleNameField, 1);
+        TextFieldUtils.setMaximumLength(salaryField, 8);
+        TextFieldUtils.setMaximumLength(firstNameField, 15);
+        TextFieldUtils.setMaximumLength(lastNameField, 15);
+        TextFieldUtils.setMaximumLength(addressField, 30);
+        TextFieldUtils.setMaximumLength(emailAddressField, 50);
+
     }
 
     private void initializeDepartmentNumberChoiceBox() {
@@ -157,8 +164,8 @@ public class NewEmployeeController {
 
                     Alert alert = new Alert(Alert.AlertType.INFORMATION);
                     alert.setTitle("Submission successful!");
-                    alert.setHeaderText(null);
-                    alert.setContentText("Employee with" + firstNameField.getText() + " " + lastNameField.getText() + " is added to the datebase");
+                    alert.setHeaderText("Employee added to the database.");
+                    alert.setContentText("Employee with full name " + employee.getFullName() + " is added to the database.");
 
                     Optional<ButtonType> buttonResult = alert.showAndWait();
                     if (buttonResult.get() == ButtonType.OK) {

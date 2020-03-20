@@ -11,6 +11,7 @@ import javafx.stage.Stage;
 import javafx.stage.WindowEvent;
 import sample.controller.AssignProjectController;
 import sample.model.Report;
+import sample.utils.PdfReportGenerator;
 
 import java.util.Optional;
 
@@ -35,11 +36,13 @@ public class AssignProject {
             public void handle(WindowEvent event) {
                 Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
                 alert.setTitle("Close Confirmation");
-                alert.setHeaderText(null);
-                alert.setContentText("Are you sure you want to close the application?");
+                alert.setHeaderText("Are you sure you want to close the application?");
+                alert.setContentText("Click CANCEL to continue, OK to close the application." +
+                        "\nReport will be generated to the destination.");
 
                 Optional<ButtonType> buttonResult = alert.showAndWait();
                 if (buttonResult.get() == ButtonType.OK) {
+                    PdfReportGenerator.generatePDF(report);
                     Platform.exit();
                 } else if (buttonResult.get() == ButtonType.CANCEL) {
                     event.consume();

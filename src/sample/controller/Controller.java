@@ -444,7 +444,6 @@ public class Controller extends BaseController {
                 errorAlert.showAndWait();
             }
         } else if (buttonResult.get() == ButtonType.CANCEL || buttonResult.get() == ButtonType.NO) {
-
         }
     }
 

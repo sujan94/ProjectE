@@ -1,5 +1,7 @@
 package sample.model;
 
+import sample.utils.DateUtils;
+
 import java.util.ArrayList;
 import java.util.List;
 
@@ -35,19 +37,23 @@ public class Report {
     @Override
     public String toString() {
         StringBuilder stringBuilder = new StringBuilder();
-        stringBuilder.append("Report\n\n\n");
+        stringBuilder.append("Report\n\n");
         stringBuilder.append(employee);
+        stringBuilder.append("\n");
         if (!employeeProject.isEmpty()) {
-            stringBuilder.append("\n\n");
             for (Project project : employeeProject) {
                 stringBuilder.append(project);
             }
+        } else {
+            stringBuilder.append("Project: Not Assigned.");
         }
+        stringBuilder.append("\n");
         if (dependent != null) {
-            stringBuilder.append("\n\n");
             stringBuilder.append(dependent);
+        } else {
+            stringBuilder.append("Dependent: Not Added.");
         }
-        stringBuilder.append("\n added to the database.");
+        stringBuilder.append("\nAdded to the database on ").append(DateUtils.getCurrentDate());
         return stringBuilder.toString();
     }
 }

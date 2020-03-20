@@ -12,7 +12,6 @@ public class TextFieldUtils {
         textField.textProperty().addListener((observable, oldValue, newValue) -> {
             String value = "";
             value = newValue.replaceAll("[^\\d]", "");
-            ;
             if (value.length() > 9) {
                 textField.setText(value.substring(0, 9));
             } else {
@@ -25,6 +24,17 @@ public class TextFieldUtils {
         textField.textProperty().addListener((observable, oldValue, newValue) -> {
             String value = "";
             textField.setText(newValue.replaceAll("[^\\d]", ""));
+        });
+    }
+
+    public static void setMaximumLength(TextField textField, int maxLength) {
+        textField.textProperty().addListener((observable, oldValue, newValue) -> {
+            String value = textField.getText().trim();
+            if (value.length() > maxLength) {
+                textField.setText(value.substring(0, maxLength));
+            } else {
+                textField.setText(value);
+            }
         });
     }
 

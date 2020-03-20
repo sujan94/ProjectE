@@ -31,10 +31,10 @@ public class Project {
 
     @Override
     public String toString() {
-        return "Project: \n\n" +
-                "Project Name =" + pname + '\n' +
-                "Project Number =" + pnumber + '\n' +
-                "Project Location =" + plocation + '\n' +
-                "Department Number =" + dnumber + '\n';
+        return "Project: \n" +
+                "Project Name = " + pname + '\n' +
+                "Project Number = " + pnumber + '\n' +
+                "Project Location = " + plocation + '\n' +
+                "Department Number = " + dnumber + '\n';
     }
 }

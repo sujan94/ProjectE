@@ -71,11 +71,11 @@ public class Employee {
 
     @Override
     public String toString() {
-        return "Employee:\n\n" +
+        return "Employee:\n" +
                 "Name = " + getFullName() + '\n' +
                 "SSN = " + ssn + '\n' +
-                "Date of Birth= " + bdate + '\n' +
-                "address= " + address + '\n' +
-                "working in department number " + dno + '\n';
+                "Date of Birth = " + bdate + '\n' +
+                "Address = " + address + '\n' +
+                "Department number = " + dno + '\n';
     }
 }
