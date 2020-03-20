@@ -103,7 +103,7 @@ public class Controller extends BaseController {
             LoadingController loadingController = fxmlLoader.getController();
             root.getChildren().add(loading);
             GridPane.setConstraints(loading, 0, 1);
-            Observable.interval(0, 2, TimeUnit.SECONDS)
+            Observable.interval(0, (long) 1.5, TimeUnit.SECONDS)
                     .take(5)
                     .subscribe(aLong -> {
                         float progressValue = (float) (0.35 * aLong);
