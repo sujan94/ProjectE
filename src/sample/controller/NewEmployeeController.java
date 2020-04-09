@@ -127,7 +127,7 @@ public class NewEmployeeController {
 
     public void onBackButtonClicked() {
 
-        FXMLLoader loader = new FXMLLoader(getClass().getResource("../ui/sample.fxml"));
+        FXMLLoader loader = new FXMLLoader(getClass().getResource("../ui/main.fxml"));
         Stage stage = new Stage();
         stage.initOwner(goBackButton.getScene().getWindow());
         try {

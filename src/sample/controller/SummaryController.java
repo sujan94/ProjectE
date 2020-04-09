@@ -44,7 +44,6 @@ public class SummaryController extends BaseController {
 
     public void initialize() {
         isSummaryRoot = true;
-        System.out.println(isSummaryRoot + ".....");
         fetchEmployeeSummary();
         fetchProjectSummary();
     }
@@ -56,19 +55,15 @@ public class SummaryController extends BaseController {
             public void run() {
                 int count = 0;
                 while (isSummaryRoot) {
-                    System.out.println(isSummaryRoot + "  inside");
                     int finalCount = count;
                     setConnectionAvailable(projectSummaryModelList != null && !projectSummaryModelList.isEmpty());
                     System.out.println(Thread.currentThread().getId());
-                    Platform.runLater(new Runnable() {
-                        @Override
-                        public void run() {
-                            if (projectSummaryModelList != null && !projectSummaryModelList.isEmpty()) {
-                                projectSummaryfield.setText(projectSummaryModelList.get(finalCount % projectSummaryModelList.size()).getTotalHoursInProject());
-                                projectSummaryLabel.setText(projectSummaryModelList.get(finalCount % projectSummaryModelList.size()).getProjectName());
-                                departmentSummaryfield.setText(projectSummaryModelList.get(finalCount % projectSummaryModelList.size()).getEmployeesInProject());
-                                departmentSummaryLabel.setText(projectSummaryModelList.get(finalCount % projectSummaryModelList.size()).getProjectName());
-                            }
+                    Platform.runLater(() -> {
+                        if (projectSummaryModelList != null && !projectSummaryModelList.isEmpty()) {
+                            projectSummaryfield.setText(projectSummaryModelList.get(finalCount % projectSummaryModelList.size()).getTotalHoursInProject());
+                            projectSummaryLabel.setText(projectSummaryModelList.get(finalCount % projectSummaryModelList.size()).getProjectName());
+                            departmentSummaryfield.setText(projectSummaryModelList.get(finalCount % projectSummaryModelList.size()).getEmployeesInProject());
+                            departmentSummaryLabel.setText(projectSummaryModelList.get(finalCount % projectSummaryModelList.size()).getProjectName());
                         }
                     });
                     count++;

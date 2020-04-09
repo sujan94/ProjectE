@@ -1,5 +1,6 @@
 package sample.repository;
 
+import javafx.util.Pair;
 import sample.model.*;
 import sample.utils.DatabaseUtils;
 
@@ -310,6 +311,29 @@ public class MainRepository {
             System.out.print("Error occurred while DELETE Operation: " + e);
             throw e;
         }
+    }
+
+    public List<Pair<String, String>> getEmployeeAndProjectCount(int count) {
+        List<Pair<String, String>> list = new ArrayList<>();
+        String query = "select  essn, Count(pno)\n" +
+                "from employee, project, works_on\n" +
+                "where dnum = dno and pno = pnumber and essn = ssn\n" +
+                "group by essn\n" +
+                "having Count(pno)> '" + count + "'";
+
+        try {
+            ResultSet r = DatabaseUtils.dbExecuteQuery(query);
+            while (r.next()) {
+                list.add(new Pair<>(r.getString(1), r.getString(2)));
+            }
+        } catch (SQLException e) {
+            LOGGER.log(Level.WARNING, e.toString());
+        } catch (NullPointerException n) {
+            LOGGER.log(Level.WARNING, "Database connection not initiated.");
+        } catch (ClassNotFoundException e) {
+            e.printStackTrace();
+        }
+        return list;
     }
 
 }

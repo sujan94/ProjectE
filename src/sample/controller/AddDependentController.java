@@ -124,7 +124,7 @@ public class AddDependentController {
         PdfReportGenerator.generatePDF(report);
         Optional<ButtonType> buttonResult = alert.showAndWait();
         if (buttonResult.isPresent() && buttonResult.get() == ButtonType.OK) {
-            FXMLLoader loader = new FXMLLoader(getClass().getResource("../ui/sample.fxml"));
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("../ui/main.fxml"));
             Stage stage = new Stage();
             stage.initOwner(root.getScene().getWindow());
             try {

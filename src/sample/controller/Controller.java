@@ -17,6 +17,7 @@ import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.GridPane;
 import javafx.stage.Stage;
+import javafx.util.Pair;
 import sample.model.Department;
 import sample.model.Employee;
 import sample.model.Project;
@@ -27,6 +28,7 @@ import sample.utils.TextFieldUtils;
 
 import java.io.IOException;
 import java.sql.SQLException;
+import java.util.List;
 import java.util.Optional;
 import java.util.concurrent.TimeUnit;
 import java.util.logging.Level;
@@ -260,7 +262,7 @@ public class Controller extends BaseController {
         // if all choice values are not any
         else if (!departmentValue.equals(DEFAULT_CHOICE_BOX_STATE) && !projectValue.equals(DEFAULT_CHOICE_BOX_STATE) && !locationValue.equals(DEFAULT_CHOICE_BOX_STATE)) {
             stringBuilder.append("from EMPLOYEE, DEPARTMENT, DEPT_LOCATIONS, PROJECT ");
-            stringBuilder.append("where Dno = Dnumber and Dnumber = Dnum and Dname ='").append(departmentValue).append("' and Pname='").append(projectValue).append("' and Dlocation='").append(locationValue).append("'");
+            stringBuilder.append("where Dno = Dnumber and Dnumber = Dnum and Pno=Pnumber and Dname ='").append(departmentValue).append("' and Pname='").append(projectValue).append("' and Dlocation='").append(locationValue).append("'");
         }
         //if department and project is  any
         else if (departmentValue.equals(DEFAULT_CHOICE_BOX_STATE) && projectValue.equals(DEFAULT_CHOICE_BOX_STATE) && !locationValue.equals(DEFAULT_CHOICE_BOX_STATE)
@@ -339,7 +341,6 @@ public class Controller extends BaseController {
                 rightBodyAnchor.getChildren().remove(summary);
                 rightBodyAnchor.getChildren().remove(graph);
                 isSummaryRoot = false;
-                System.out.println(isSummaryRoot + "#######");
 
                 break;
             case 3:
@@ -349,7 +350,6 @@ public class Controller extends BaseController {
                     rightBodyAnchor.getChildren().remove(summary);
                     rightBodyAnchor.getChildren().remove(graph);
                     isSummaryRoot = false;
-                    System.out.println(isSummaryRoot + "#######");
                     department = FXMLLoader.load(getClass().getResource("../ui/department.fxml"));
                     summaryChildBody.setVisible(false);
                     rightBodyAnchor.getChildren().add(department);
@@ -447,4 +447,10 @@ public class Controller extends BaseController {
         }
     }
 
+    public void onMenuClicked() {
+        List<Pair<String, String>> list = MainRepository.getInstance().getEmployeeAndProjectCount(2);
+        for (Pair<String, String> p : list) {
+
+        }
+    }
 }
