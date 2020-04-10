@@ -336,4 +336,24 @@ public class MainRepository {
         return list;
     }
 
+    public List<String> getEmployeeWithOutProject() {
+        List<String> list = new ArrayList<>();
+        String query = "select distinct ssn\n" +
+                "from employee\n" +
+                "where ssn NOT IN  (select   w.essn from works_on w, project p where pnumber = pno and dnum = employee.dno)";
+        try {
+            ResultSet r = DatabaseUtils.dbExecuteQuery(query);
+            while (r.next()) {
+                list.add(r.getString(1));
+            }
+        } catch (SQLException e) {
+            LOGGER.log(Level.WARNING, e.toString());
+        } catch (NullPointerException n) {
+            LOGGER.log(Level.WARNING, "Database connection not initiated.");
+        } catch (ClassNotFoundException e) {
+            e.printStackTrace();
+        }
+        return list;
+    }
+
 }

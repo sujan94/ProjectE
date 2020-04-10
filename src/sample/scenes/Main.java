@@ -25,20 +25,20 @@ public class Main extends Application {
     @Override
     public void start(Stage primaryStage) throws Exception {
         FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("../ui/main.fxml"));
-        controller = fxmlLoader.getController();
         Parent root = fxmlLoader.load();
         Menu menu = new Menu("Menu");
         MenuItem menuItem = new MenuItem("Scan");
         menu.getItems().add(menuItem);
         menuBar.getMenus().add(menu);
-        menuItem.setOnAction(e -> {
-            controller.onMenuClicked();
-        });
         VBox vBox = new VBox();
         vBox.getChildren().addAll(menuBar, root);
         primaryStage.setTitle(ApplicationConstant.APPLICATION_TITLE);
         Scene scene = new Scene(vBox, ApplicationConstant.SCREEN_WIDTH, ApplicationConstant.SCREEN_HEIGHT);
         primaryStage.setScene(scene);
+        controller = fxmlLoader.getController();
+        menuItem.setOnAction(e -> {
+            controller.onMenuClicked();
+        });
         primaryStage.show();
     }
 }

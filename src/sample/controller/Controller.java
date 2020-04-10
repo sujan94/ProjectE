@@ -6,7 +6,6 @@ import javafx.application.Platform;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
-import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Node;
@@ -18,12 +17,15 @@ import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.GridPane;
 import javafx.stage.Stage;
 import javafx.util.Pair;
+import sample.enums.ScanResult;
 import sample.model.Department;
 import sample.model.Employee;
 import sample.model.Project;
+import sample.model.ScanReport;
 import sample.repository.MainRepository;
 import sample.scenes.NewEmployee;
 import sample.utils.DatabaseUtils;
+import sample.utils.PdfReportGenerator;
 import sample.utils.TextFieldUtils;
 
 import java.io.IOException;
@@ -86,6 +88,7 @@ public class Controller extends BaseController {
     private Parent summary;
     private Parent graph;
     private Employee selectedEmployee;
+    private List<Employee> employeeList;
 
     public void initialize() {
         splitPane.setVisible(false);
@@ -129,70 +132,67 @@ public class Controller extends BaseController {
         TableColumn<Employee, String> firstNameCol = new TableColumn<>("First Name");
         firstNameCol.setMinWidth(60);
         firstNameCol.setCellValueFactory(
-                new PropertyValueFactory<Employee, String>("fname"));
+                new PropertyValueFactory<>("fname"));
 
         TableColumn<Employee, String> mNameCol = new TableColumn<>("Middle Name");
         mNameCol.setMinWidth(40);
         mNameCol.setCellValueFactory(
-                new PropertyValueFactory<Employee, String>("minit"));
+                new PropertyValueFactory<>("minit"));
 
         TableColumn<Employee, String> lastNameCol = new TableColumn<>("Last Name");
         lastNameCol.setMinWidth(60);
         lastNameCol.setCellValueFactory(
-                new PropertyValueFactory<Employee, String>("lname"));
+                new PropertyValueFactory<>("lname"));
 
         TableColumn<Employee, String> ssnCol = new TableColumn<>("SSN");
         ssnCol.setMinWidth(60);
         ssnCol.setCellValueFactory(
-                new PropertyValueFactory<Employee, String>("ssn"));
+                new PropertyValueFactory<>("ssn"));
 
         TableColumn<Employee, String> bdateCol = new TableColumn<>("Date of Birth");
         bdateCol.setPrefWidth(60);
         bdateCol.setCellValueFactory(
-                new PropertyValueFactory<Employee, String>("bdate"));
+                new PropertyValueFactory<>("bdate"));
 
         TableColumn<Employee, String> addressCol = new TableColumn<>("Address");
         addressCol.setMinWidth(60);
         addressCol.setCellValueFactory(
-                new PropertyValueFactory<Employee, String>("address"));
+                new PropertyValueFactory<>("address"));
 
         TableColumn<Employee, String> sexCol = new TableColumn<>("Sex");
         sexCol.setPrefWidth(30);
         sexCol.setCellValueFactory(
-                new PropertyValueFactory<Employee, String>("sex"));
+                new PropertyValueFactory<>("sex"));
 
         TableColumn<Employee, String> salaryCol = new TableColumn<>("Salary");
         salaryCol.setMinWidth(60);
         salaryCol.setCellValueFactory(
-                new PropertyValueFactory<Employee, String>("salary"));
+                new PropertyValueFactory<>("salary"));
 
         TableColumn<Employee, String> superssnCol = new TableColumn<>("Supervisor's SSN");
         superssnCol.setMinWidth(60);
         superssnCol.setCellValueFactory(
-                new PropertyValueFactory<Employee, String>("supervisorssn"));
+                new PropertyValueFactory<>("supervisorssn"));
 
         TableColumn<Employee, String> dnoCol = new TableColumn<>("Department Number");
         dnoCol.setMinWidth(30);
         dnoCol.setCellValueFactory(
-                new PropertyValueFactory<Employee, String>("dno"));
+                new PropertyValueFactory<>("dno"));
 
-        employeeTable.setOnMouseClicked(new EventHandler<MouseEvent>() {
-            @Override
-            public void handle(MouseEvent event) {
-                Node node = ((Node) event.getTarget()).getParent();
-                TableRow<Employee> row;
-                if (node instanceof TableRow) {
-                    row = (TableRow) node;
-                    System.out.println(row.getItem());
-                    deleteEmployeeButton.setVisible(true);
-                    selectedEmployee = row.getItem();
-                } else {
-                    // clicking on text part
-                    LOGGER.log(Level.INFO, "Clicked outside row");
-                    deleteEmployeeButton.setVisible(false);
-                }
-
+        employeeTable.setOnMouseClicked(event -> {
+            Node node = ((Node) event.getTarget()).getParent();
+            TableRow<Employee> row;
+            if (node instanceof TableRow) {
+                row = (TableRow) node;
+                System.out.println(row.getItem());
+                deleteEmployeeButton.setVisible(true);
+                selectedEmployee = row.getItem();
+            } else {
+                // clicking on text part
+                LOGGER.log(Level.INFO, "Clicked outside row");
+                deleteEmployeeButton.setVisible(false);
             }
+
         });
 
         employeeTable.setItems(employeeObservableList);
@@ -298,6 +298,7 @@ public class Controller extends BaseController {
                 .subscribeOn(Schedulers.io())
                 .subscribe(employeeList -> {
                     employeeObservableList.clear();
+                    this.employeeList = employeeList;
                     employeeObservableList.addAll(employeeList);
                 });
     }
@@ -449,8 +450,30 @@ public class Controller extends BaseController {
 
     public void onMenuClicked() {
         List<Pair<String, String>> list = MainRepository.getInstance().getEmployeeAndProjectCount(2);
-        for (Pair<String, String> p : list) {
+        List<String> employeeWithoutProjectInOwnDeptList = MainRepository.getInstance().getEmployeeWithOutProject();
+        if (list.isEmpty() && employeeWithoutProjectInOwnDeptList.isEmpty()) {
+            ScanReport scanReport = new ScanReport();
+            scanReport.setScanResult(ScanResult.SUCCESS);
+            PdfReportGenerator.generatePDF(scanReport);
+        } else {
+            ScanReport scanReport = new ScanReport();
+            scanReport.setScanResult(ScanResult.FAIL);
+            for (Pair<String, String> p : list) {
+                for (Employee e : employeeList) {
+                    if (e.getSsn().equals(p.getKey())) {
+                        scanReport.getEmployeesWorkingOnMoreProject().add(e);
+                    }
+                }
+            }
 
+            for (String s : employeeWithoutProjectInOwnDeptList) {
+                for (Employee e : employeeList) {
+                    if (e.getSsn().equals(s)) {
+                        scanReport.getEmployeeWithNoProjectInOwnDept().add(e);
+                    }
+                }
+            }
+            PdfReportGenerator.generatePDF(scanReport);
         }
     }
 }
