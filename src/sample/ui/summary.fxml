@@ -7,8 +7,8 @@
 <?import javafx.scene.paint.*?>
 <?import javafx.scene.shape.Rectangle?>
 <?import javafx.scene.text.*?>
-<AnchorPane fx:id="root" prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/10.0.2-internal"
-            xmlns:fx="http://javafx.com/fxml/1" fx:controller="sample.controller.SummaryController">
+<AnchorPane xmlns:fx="http://javafx.com/fxml/1" fx:id="root" prefHeight="400.0" prefWidth="600.0"
+            xmlns="http://javafx.com/javafx/10.0.2-internal" fx:controller="sample.controller.SummaryController">
     <children>
         <Label text="Summary" underline="true" AnchorPane.leftAnchor="0.0" GridPane.columnIndex="0"
                GridPane.rowIndex="0">

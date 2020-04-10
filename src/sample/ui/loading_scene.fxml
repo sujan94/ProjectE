@@ -4,8 +4,8 @@
 <?import javafx.scene.control.ProgressBar?>
 <?import javafx.scene.layout.*?>
 <?import javafx.scene.text.Font?>
-<GridPane fx:id="root" alignment="CENTER" xmlns="http://javafx.com/javafx/10.0.2-internal"
-          xmlns:fx="http://javafx.com/fxml/1" fx:controller="sample.controller.LoadingController">
+<GridPane xmlns:fx="http://javafx.com/fxml/1" fx:id="root" alignment="CENTER"
+          xmlns="http://javafx.com/javafx/10.0.2-internal" fx:controller="sample.controller.LoadingController">
     <columnConstraints>
         <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0"/>
     </columnConstraints>

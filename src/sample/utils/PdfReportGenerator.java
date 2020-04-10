@@ -13,11 +13,13 @@ import java.io.IOException;
 
 public class PdfReportGenerator {
     public static final String DEST = "./output/";
+    public static final String SCAN_SUB_DEST = "scan-report/";
+    public static final String DATABASE_RECORD_UPDATE = "database-record-report/";
     public static final String EXTENSION = ".pdf";
 
     public static void generatePDF(Report report) {
         PDDocument document = null;
-        String filename = DEST + report.getEmployee().getFname() + EXTENSION;
+        String filename = DEST + DATABASE_RECORD_UPDATE + report.getEmployee().getFname() + EXTENSION;
 
         PDDocument doc = null;
         doc = new PDDocument();
@@ -56,7 +58,7 @@ public class PdfReportGenerator {
 
     public static void generatePDF(ScanReport report) {
         PDDocument document = null;
-        String filename = DEST + report.getScanTimeStamp() + EXTENSION;
+        String filename = DEST + SCAN_SUB_DEST + report.getScanTimeStamp() + EXTENSION;
 
         PDDocument doc = null;
         doc = new PDDocument();

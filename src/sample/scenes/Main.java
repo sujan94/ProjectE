@@ -1,5 +1,7 @@
 package sample.scenes;
 
+import io.reactivex.rxjava3.core.Observable;
+import io.reactivex.rxjava3.schedulers.Schedulers;
 import javafx.application.Application;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
@@ -14,13 +16,13 @@ import sample.controller.Controller;
 
 public class Main extends Application {
 
-    public static void main(String[] args) {
-        launch(args);
-    }
-
     Controller controller;
     @FXML
     MenuBar menuBar = new MenuBar();
+
+    public static void main(String[] args) {
+        launch(args);
+    }
 
     @Override
     public void start(Stage primaryStage) throws Exception {
@@ -36,8 +38,11 @@ public class Main extends Application {
         Scene scene = new Scene(vBox, ApplicationConstant.SCREEN_WIDTH, ApplicationConstant.SCREEN_HEIGHT);
         primaryStage.setScene(scene);
         controller = fxmlLoader.getController();
+        Observable.just("").subscribeOn(Schedulers.computation()).subscribe(s -> controller.onMenuClicked(), error -> System.out.println(error.toString()));
         menuItem.setOnAction(e -> {
-            controller.onMenuClicked();
+            menuItem.setVisible(false);
+            menuItem.setVisible(true);
+            Observable.just("").subscribeOn(Schedulers.computation()).subscribe(s -> controller.onMenuClicked());
         });
         primaryStage.show();
     }

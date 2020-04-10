@@ -6,8 +6,8 @@
 <?import javafx.scene.control.TableView?>
 <?import javafx.scene.layout.*?>
 <?import javafx.scene.text.Font?>
-<GridPane fx:id="root" hgap="16.0" prefWidth="450.0" vgap="16.0" xmlns="http://javafx.com/javafx/10.0.2-internal"
-          xmlns:fx="http://javafx.com/fxml/1" fx:controller="sample.controller.DepartmentController">
+<GridPane xmlns:fx="http://javafx.com/fxml/1" fx:id="root" hgap="16.0" prefWidth="450.0" vgap="16.0"
+          xmlns="http://javafx.com/javafx/10.0.2-internal" fx:controller="sample.controller.DepartmentController">
     <children>
         <Label text="Department" underline="true" GridPane.columnIndex="0" GridPane.rowIndex="0">
             <font>

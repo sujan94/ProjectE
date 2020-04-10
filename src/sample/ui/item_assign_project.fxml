@@ -2,7 +2,7 @@
 
 <?import javafx.scene.control.*?>
 <?import javafx.scene.layout.*?>
-<AnchorPane fx:id="root" xmlns:fx="http://javafx.com/fxml/1" xmlns="http://javafx.com/javafx/10.0.2-internal"
+<AnchorPane xmlns:fx="http://javafx.com/fxml/1" fx:id="root" xmlns="http://javafx.com/javafx/10.0.2-internal"
             fx:controller="sample.controller.AssignItemController">
     <children>
         <GridPane hgap="16.0" vgap="16.0" AnchorPane.leftAnchor="16.0" AnchorPane.topAnchor="16.0">

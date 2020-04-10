@@ -5,8 +5,8 @@
 <?import javafx.scene.chart.CategoryAxis?>
 <?import javafx.scene.chart.NumberAxis?>
 <?import javafx.scene.layout.*?>
-<AnchorPane fx:id="root" prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/10.0.2-internal"
-            xmlns:fx="http://javafx.com/fxml/1" fx:controller="sample.controller.GraphController">
+<AnchorPane xmlns:fx="http://javafx.com/fxml/1" fx:id="root" prefHeight="400.0" prefWidth="600.0"
+            xmlns="http://javafx.com/javafx/10.0.2-internal" fx:controller="sample.controller.GraphController">
     <children>
         <BarChart fx:id="barChart" title="Total hours spent in different projects" AnchorPane.bottomAnchor="0.0"
                   AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="16.0" AnchorPane.topAnchor="0.0">
